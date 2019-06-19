@@ -2,50 +2,69 @@ import QtQuick 2.0
 import QtQuick.Controls.Styles 1.0
 import Felgo 3.0
 
-//GameButton包装QtQuick控件按钮并使用GameStyle设置样式。
-//要对颜色，字体或文本进行custimze，请使用自定义ButtonStyle。
-//注意：GameButton等游戏控件已弃用，不再接收更新和修复。 相反，请使用Felgo App Controls。
-GameButton{
-     id:imageButton
-     height: parent.height
+GameButton {
+  id: imageButton
 
-     //设置按钮样式背景矩形的属性
-     property int boderWidth: 1
-     property color borderColor: "black"
-     property int radius: 3
-     property color color: "white"
+  height: parent.height
 
-     style: ButtonStyle{
-         background: Rectangle{
-             border.width: imageButton.boderWidth
-             border.color: imageButton.borderColor
-             radius: imageButton.radius
+  property int borderWidth: 1
+  property color borderColor: "black"
+  property int radius: 3
+  property color color: "white"
+  property alias mouseArea: mouseArea
 
-          gradient: Gradient{
-                GradientStop{position:0.0; color: imageButton.color }
-                //GradientStop{position: 1.0; Qt.tint(imageButton.color, "#24000000")}
-          }
-         }
-     }
-     onClicked: autdioManager.playSound("click")
+  property alias image: image
+  property alias hoverRectangle: hoverRectangle
 
-     // the image displayed
-     MultiResolutionImage {
-       id: image
+  // we override the default Felgo style with our own style
+  style: ButtonStyle {
+    background: Rectangle {
+      border.width: imageButton.borderWidth
+      border.color: imageButton.borderColor
+      radius: imageButton.radius
 
-       anchors.fill: parent
-       //anchors.margins: 1
-       fillMode: Image.PreserveAspectFit
-     }
+      // add a gradient as background
+      gradient: Gradient {
+        // take color as the first color
+        GradientStop { position: 0.0; color: imageButton.color }
+        // tint color, to make it a little darker and use it as second color
+        GradientStop { position: 1.0; color: Qt.tint(imageButton.color, "#24000000") }
+      }
+    }
+  }
 
-     Rectangle {
-       id: hoverRectangle
-       anchors.fill: parent
+  onClicked: audioManager.playSound("click")
 
-       radius: imageButton.radius
-       color: "white"
+  // 图片
+  MultiResolutionImage {
+    id: image
 
-       //当鼠标悬停在按钮上时，这个矩形稍微可见
-       opacity: hovered ? 0.3 : 0
-     }
+    anchors.fill: parent
+    anchors.margins: 1
+
+    fillMode: Image.PreserveAspectFit
+    MouseArea{
+        id:mouseArea
+      anchors.fill: parent
+
+
+    }
+  }
+
+  // this white rectangle covers the button when the mouse hovers above it
+  Rectangle {
+    id: hoverRectangle
+
+    anchors.fill: parent
+
+    radius: imageButton.radius
+    color: "white"
+
+    // when the mouse hovers over the button, this rectangle is slightly visible
+    opacity: hovered ? 0.3 : 0
+
+
+  }
+
 }
+

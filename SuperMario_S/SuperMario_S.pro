@@ -1,6 +1,5 @@
 # allows to add DEPLOYMENTFOLDERS and links to the Felgo library and QtCreator auto-completion
 CONFIG += felgo
-CONFIG += core wigets guit
 
 # uncomment this line to add the Live Client Module and use live reloading with your custom C++ code
 # for the remaining steps to build a custom Live Code Reload app see here: https://felgo.com/custom-code-reload-app/
@@ -8,7 +7,7 @@ CONFIG += core wigets guit
 
 # Project identifier and version
 # More information: https://felgo.com/doc/felgo-publishing/#project-configuration
-PRODUCT_IDENTIFIER = com.yourcompany.wizardMSML.SuperMarioS
+PRODUCT_IDENTIFIER = com.yourcompany.wizardEVP.SuperStart
 PRODUCT_VERSION_NAME = 1.0.0
 PRODUCT_VERSION_CODE = 1
 
@@ -26,7 +25,8 @@ DEPLOYMENTFOLDERS += assetsFolder
 
 # Add more folders to ship with the application here
 
-RESOURCES += #    resources.qrc # uncomment for publishing
+RESOURCES += \ #    resources.qrc # uncomment for publishing
+    resources.qrc
 
 # NOTE: for PUBLISHING, perform the following steps:
 # 1. comment the DEPLOYMENTFOLDERS += qmlFolder line above, to avoid shipping your qml files with the application (instead they get compiled to the app binary)
@@ -39,8 +39,7 @@ RESOURCES += #    resources.qrc # uncomment for publishing
 
 
 # The .cpp file which was generated for your project. Feel free to hack it.
-SOURCES += main.cpp \
-    main.cpp
+SOURCES += main.cpp
 
 
 android {
@@ -62,50 +61,15 @@ macx {
 }
 
 DISTFILES += \
-    qml/common/PlatformerImageButton.qml \
-    qml/common/AudioManager.qml \
-    assets/audio/game/death.mp3 \
-    assets/audio/game/level1.mp3 \
-    assets/audio/game/success.mp3 \
-    assets/audio/02.超级马里奥地底关卡.mp3 \
-    assets/audio/03.超级马里奥水下关卡.mp3 \
-    assets/audio/04.超级马里奥星星.mp3 \
-    assets/audio/05.超级马里奥boss关卡.mp3 \
-    assets/audio/07.5.超级马里奥最后.mp3 \
-    assets/audio/PTModelSound_ID13612.mp3 \
-    assets/audio/PTModelSound_ID14795.mp3 \
-    assets/audio/PTModelSound_ID32200.mp3 \
-    assets/audio/PTModelSound_ID32318.mp3 \
-    qml/scenes/RankingScene.qml \
-    qml/scenes/OptionScene.qml \
-    assets/img/felgo-logo.png \
-    qml/scenes/SceneBase.qml \
-    qml/common/PlatformerSelectableImageButton.qml \
-    assets/img/ui/backgroud3.png \
-    assets/img/ui/level1.png \
-    assets/img/ui/level2.png \
-    assets/img/ui/level3.png \
-    assets/img/ui/music.png \
-    assets/img/ui/playMune.png \
-    assets/img/ui/PTModelSprite_ID33986.png \
-    assets/img/ui/PTModelSprite_ID35359.png \
-    assets/img/ui/PTModelSprite_ID35384.png \
-    assets/img/ui/PTModelSprite_ID35591.png \
-    assets/img/ui/PTModelSprite_ID35597.png \
-    assets/img/ui/PTModelSprite_ID35603.png \
-    assets/img/ui/PTModelSprite_ID35609.png \
-    assets/img/ui/PTModelSprite_ID35615.png \
-    assets/img/ui/PTModelSprite_ID35621.png \
-    assets/img/felgo-logo.png \
-    assets/img/ui/backgroud3.png \
-    assets/img/ui/music.png \
-    assets/img/ui/playMune.png \
-    assets/img/ui/PTModelSprite_ID33986.png \
-    assets/img/ui/PTModelSprite_ID35359.png \
-    assets/img/ui/PTModelSprite_ID35384.png \
-    assets/img/ui/PTModelSprite_ID35591.png \
-    assets/img/ui/PTModelSprite_ID35597.png \
-    assets/img/ui/PTModelSprite_ID35603.png \
-    assets/img/ui/PTModelSprite_ID35609.png \
-    assets/img/ui/PTModelSprite_ID35615.png \
-    assets/img/ui/PTModelSprite_ID35621.png
+    qml/SceneBase.qml \
+    qml/entities/TiledEntityBase.qml \
+    qml/entities/Wheel.qml \
+    qml/entities/Diamond.qml \
+    qml/gameElements/SceneShow.qml \
+    qml/entities/Enemy.qml \
+    qml/entities/Home.qml \
+    qml/common/Suspend.qml \
+    qml/common/FinalSuccess.qml \
+    qml/common/Failed.qml \
+    qml/common/menu_sound.png \
+    qml/common/MediaSound.qml
