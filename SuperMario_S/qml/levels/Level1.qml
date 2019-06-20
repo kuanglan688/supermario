@@ -4,6 +4,7 @@ import "../entities"
 
 Item {
     id: level1
+
     Ground{
          //        x:0
          //        y:0
@@ -20,14 +21,14 @@ Item {
         row:3
 
     }
-    Platform{
-        widthSize:1
-        heightSize: 1
-        row:9
-        column: 13
+//    Platform{
+//        widthSize:1
+//        heightSize: 1
+//        row:9
+//        column: 13
 
 
-    }//
+//    }//
 
     Water{
         widthSize: 4
@@ -203,32 +204,43 @@ Item {
         row:2
 
     }
-    Mushroom{
-        column:15
-        row:10
-    }
-    Coin{
-        column:13
-        row:13
-    }
-    Diamond{
-        column: 20
-        row :10
-    }
+//    Mushroom{
+//        column:15
+//        row:10
+//    }
+//    Coin{
+//        column:13
+//        row:13
+//    }
+//    Diamond{
+//        column: 20
+//        row :10
+//    }
 
-    Scorpion{
-        column: 15
-        row:11
+//    Scorpion{
+//        column: 15
+//        row:11
 
-    }
+//    }
     Snail{
-        column: 19
+        column: 140
         row:3
 
     }
-    Mushroom{
-        column:19
-        row:10
-    }
+//    Mushroom{
+//        column:19
+//        row:10
+//    }
+//    Golden{
+//        column: 7
+//        row:11
+
+//    }
+//    Magic{
+//          column: 7
+//          row:11
+//    }
+
+
 }
 

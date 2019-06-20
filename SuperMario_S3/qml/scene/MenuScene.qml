@@ -14,25 +14,35 @@ Scene {
     //排行榜按钮信号
     signal rankingScenePressed
     MainMenu{
-       id:menuEditorWrapper
+        id:menuEditorWrapper
 
     }
     // background
-    Rectangle {
-        anchors.fill: parent.gameWindowAnchorItem
-        MultiResolutionImage {
-            fillMode: Image.Stretch
-            //1.Image.Stretch –图片自适应
-            // 2.Image.PreserveAspectFit –图片均匀缩放,不需要裁剪
-            //3.Image.PreserveAspectCrop –图片自动裁剪
-            //4.Image.Tile –图片是水平和垂直方向复制的
-            //5.Image.TileVertically –图片是水平方向复制的
-            //6.Image.TileHorizontally –图片是垂直方向复制的
-            //7.Iamge.Pad –图片不经过转换
-            anchors.fill: parent
-            source: "../../assets/img/ui/backgroud3.png"
-        }
+
+    BackgroundImage{
+        id:bgimage
+        anchors.fill: parent
+        source: "../../assets/img/ui/backgroud3.png"
     }
+
+    //    Rectangle {
+
+
+    //        color: "lightblue"
+    //        anchors.fill: parent.gameWindowAnchorItem
+    //        MultiResolutionImage {
+    //            fillMode: Image.Pad/*Image.Stretch*/
+    //            //1.Image.Stretch –图片自适应
+    //            //2.Image.PreserveAspectFit –图片均匀缩放,不需要裁剪
+    //            //3.Image.PreserveAspectCrop –图片自动裁剪
+    //            //4.Image.Tile –图片是水平和垂直方向复制的
+    //            //5.Image.TileVertically –图片是水平方向复制的
+    //            //6.Image.TileHorizontally –图片是垂直方向复制的
+    //            //7.Iamge.Pad –图片不经过转换
+    //            anchors.fill: parent
+    //            source: "../../assets/img/ui/backgroud3.png"
+    //        }
+    //    }
     //OptionScene{x:1100;y:340; id:optionMenu;}
 
     // menu
@@ -43,7 +53,6 @@ Scene {
             text: "PLAY"
             onClicked: levelScenePressed()
         }
-
         MenuButton {
 
             text:  qsTr("Options")

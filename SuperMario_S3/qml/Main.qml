@@ -7,10 +7,10 @@ import "./scene/particles"
 GameWindow {
   id: gameWindow
 
-  screenWidth: 480*2
-  screenHeight: 320*2
+  screenWidth: 960
+  screenHeight: 640
 
-  settings.style: ParticleEditorStyle {}
+//  settings.style: ParticleEditorStyle {}
 
   EntityManager {
     id: entityManager

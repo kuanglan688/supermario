@@ -1,5 +1,6 @@
 import Felgo 3.0
 import QtQuick 2.0
+import QtGraphicalEffects 1.12
 
 TiledEntityBase {
 
@@ -30,6 +31,16 @@ TiledEntityBase {
         collidesWith: Box.Category1
     }
 
+    Glow{//发光效果
+        anchors.fill: diamondImage
+        source: diamondImage
+        radius: 16
+        samples: 24
+        color: "white"
+        spread: 0.5
+        visible: !collected
+
+    }
     property bool collected: false
     function collect(){
         collected = true

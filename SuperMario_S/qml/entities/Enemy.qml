@@ -16,6 +16,7 @@ EntityBase {
     y:gameScene.gridSize*20 - row*gameScene.gridSize
 
     function die() {
+        mediaSound.gameSound("enemy_killed")
             alive = false
         snailImage.opacity=0
 

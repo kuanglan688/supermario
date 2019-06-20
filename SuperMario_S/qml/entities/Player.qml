@@ -6,9 +6,14 @@ EntityBase {
     id: player
     entityType: "player"
     state:"standing"
+    focus: true
 
     width: playerImage.width
     height: playerImage.height
+
+//    property bool check: false
+    property int count: 0
+    signal send()
 
     MultiResolutionImage{
         id: playerImage
@@ -18,7 +23,7 @@ EntityBase {
         //        mirror: (controller.xAxis==-1)
         transformOrigin: Item.Bottom //从图片底部中心缩放
 
-       property string playerstanding: "../../assets/img/game/PTModelSprite_ID34297.png"
+        property string playerstanding: "../../assets/img/game/PTModelSprite_ID34297.png"
         property string playerwalking_1: "../../assets/img/game/PTModelSprite_ID34261.png"
         property string playerwalking_2: "../../assets/img/game/PTModelSprite_ID34260.png"
         property string playerwalking_3: "../../assets/img/game/PTModelSprite_ID34259.png"
@@ -62,7 +67,7 @@ EntityBase {
         active: alive
         bodyType: Body.Dynamic //动态的物体之间才可以碰撞
         categories: Box.Category1
-        collidesWith: Box.Category3|Box.Category7|Box.Category8|Box.Category11|Box.Category12//与Box.Category3对手&&Box.Category8地板
+        collidesWith: Box.Category3|Box.Category7|Box.Category8|Box.Category11|Box.Category12|Box.Category11|Box.Category16|Box.Category9//与Box.Category3对手&&Box.Category8地板
 
         friction: 0  //摩擦力
 
@@ -93,19 +98,85 @@ EntityBase {
                 diamondnumber ++
             }else if(otherEntiry.entityType === "home")/*人物在房子那里消失*/
             {
-                    mediaSound.gameSound("running_time")
-                    playerImage.opacity=0
-                    collider.active=false
+                mediaSound.gameSound("running_time")
+                playerImage.opacity=0
+                collider.active=false
             }else if(otherEntiry.entityType === "opponent"){
-//                    mediaSound.gameSound("gameover")
-                    player.die();
+                player.die();
             }else if(otherEntiry.entityType ==="home")
             {
-                    mediaSound.gameSound("running_time")
-                    player.opacity=0
+                mediaSound.gameSound("running_time")
+                player.opacity=0
+            }else if(otherEntiry.entityType === "magic"&&count==1)
+            {
+
+                mediaSound.gameSound("mushroom_catch")
+
+                otherEntiry.visable();//分送信号
+                console.log("collider")
+            }else if(otherEntiry.entityType === "water")
+                player.die();
+            else if(otherEntiry.entityType === "spikerock")
+                player.die();
+        }
+
+    }
+
+    PolygonCollider{
+        id:topCollider
+
+        vertices: [
+            Qt.point(29,0),
+            Qt.point(19,7),
+            Qt.point(19,10),
+            Qt.point(40,10)
+        ]
+        active: alive
+        bodyType: Body.Dynamic
+        categories: Box.Category2
+        collidesWith: Box.Category16|Box.Category11
+        collisionTestingOnlyMode: true
+
+        fixture.onBeginContact: {
+            var otherEntity = other.getBody().target
+
+            if(otherEntity.entityType==="magic"){
+                send()
+//                otherEntity.check=true
+                console.log("collider magic")
+                mediaSound.gameSound("hit_block")
+                otherEntity.showimage()
+            }
+            if(otherEntity.entityType==="golden")
+            {
+                console.log("collider golden")
+                 otherEntity.show()
             }
 
         }
+
+        friction: 0
+
+
+
+
+    }
+
+    Timer{
+        id:checkTime
+        running: false
+        interval: 1000
+        onTriggered: {
+            count++
+            console.log(count)
+        }
+
+    }
+
+
+    onSend: {
+
+        checkTime.running=true
 
     }
     property int coinnumber: 0 //金币数目
@@ -136,18 +207,17 @@ EntityBase {
         bodyType: Body.Dynamic
         active: collider.active
         categories: Box.Category2
-        collidesWith: Box.Category3|Box.Category8
+        collidesWith: Box.Category3|Box.Category8|Box.Category11//11是金色的wall
 
         fixture.onBeginContact: {
             var otherEntiry = other.getBody().target
             //            console.log(otherEntiry.entityType+" at boxcllider area")
-            if(otherEntiry.entityType === "ground"||otherEntiry.entityType === "platform"){
+            if(otherEntiry.entityType === "ground"||otherEntiry.entityType === "platform"||otherEntiry.entityType === "golden"){
                 enablejump = true
                 if(couldjumptwotimes)
                     doublejump = true
                 //                console.log("Now You Could Jump Two Times")
             } else if(otherEntiry.entityType === "opponent"){
-                mediaSound.gameSound("enemy_killed")
                 otherEntiry.die()
             }
         }
@@ -215,11 +285,6 @@ EntityBase {
             collider.linearVelocity.y = firstjumpspeed
             doublejump = false;
         }
-
-//                if(player.state === "jumping"){}
-//                else{
-//                    collider.linearVelocity.y = -220
-//                }
     }
     property bool enablejump: true  //第一次跳跃
     property bool doublejump: false  //第二次跳跃
@@ -256,6 +321,7 @@ EntityBase {
             alive = false
         }
     }
+
 
 
 }

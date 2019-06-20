@@ -20,9 +20,15 @@ GameWindow {
     screenWidth: 960
     screenHeight: 640
 
+//    property alias entityManger: entityManger
+    EntityManager{
+        id:entityManger
+        entityContainer: gameScene
+    }
 
     GameScene{
-    id:gameScene
+        id:gameScene
     }
+
 
 }

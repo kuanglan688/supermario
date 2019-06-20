@@ -54,7 +54,7 @@ Enemy{
 
 
         categories: Box.Category3
-        collidesWith: Box.Category1 | Box.Category2 |Box.Category8
+        collidesWith: Box.Category1 | Box.Category2 |Box.Category8 |Box.Category14
 
         onLinearVelocityChanged: {
 
@@ -63,15 +63,6 @@ Enemy{
 
             linearVelocity.x = direction*speed
         }
-        //        fixture.onBeginContact: {
-        //            var otherEntity = other.getBody().target
-        //            if(otherEntity.entityType==="player"){
-        //                snailImage.opacity=0
-        //                alive=false
-
-        //            }
-
-        //        }
     }
 
     BoxCollider{
@@ -97,22 +88,6 @@ Enemy{
     }
 
 
-    /* //    BoxCollider{
-    //        id:rightColliderSensor
-    //        active: collider.active
-
-    //        width: 5
-    //        height: 5
-    //        anchors.top: parent.bottom
-    //        anchors.right: parent.right
-
-    //        collisionTestingOnlyMode: true
-
-    //        categories: Box.Category4//是一个传感器
-    //        collidesWith: Box.Category8
-
-
-    //    }*/
     Timer{
         id:snailTimer
         interval: 400

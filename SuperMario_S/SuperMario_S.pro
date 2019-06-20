@@ -72,4 +72,8 @@ DISTFILES += \
     qml/common/FinalSuccess.qml \
     qml/common/Failed.qml \
     qml/common/menu_sound.png \
-    qml/common/MediaSound.qml
+    qml/common/MediaSound.qml \
+    qml/entities/Golden.qml \
+    qml/entities/Wall.qml \
+    qml/entities/Magic.qml \
+    qml/entities/Bullet.qml

@@ -24,8 +24,6 @@ RESOURCES += \
 
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp \
-    main.cpp \
-    main.cpp
 
 
 android {
@@ -139,7 +137,9 @@ DISTFILES += \
     qml/common/MenuButton.qml \
     qml/scene/SceneBase.qml \
     qml/scene/LevelScene.qml \
-    qml/scene/MainMenu.qml
+    qml/scene/MainMenu.qml \
+    ../../simple/qml/MenuScene.qml \
+    ../../simple/qml/GameButton.qml
 
 SUBDIRS += \
     SuperMario_S3.pro

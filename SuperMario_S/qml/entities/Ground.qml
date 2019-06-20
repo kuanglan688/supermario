@@ -41,7 +41,7 @@ TiledEntityBase {
         bodyType: Body.Static
 
         categories: Box.Category8
-        collidesWith:Box.Category1|Box.Category2|Box.Category3|Box.Category12
+        collidesWith:Box.Category1|Box.Category2|Box.Category3|Box.Category12|Box.Category14
     }
 
 }

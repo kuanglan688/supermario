@@ -5,6 +5,7 @@ EntityBase {
 
     id: tiledEntityBase
 
+
     property int column
     property double row
     property int widthSize:1

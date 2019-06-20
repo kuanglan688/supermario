@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.8.2, 2019-06-19T21:24:29. -->
+<!-- Written by QtCreator 4.8.2, 2019-06-20T12:03:20. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -294,8 +294,8 @@
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">SuperMario_S3</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/run/media/root/linux_data/SuperMario_S3/SuperMario_S3.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">SuperMario_S32</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/mjr/data_qt/qt_practice/supermary/SuperMario_S3/SuperMario_S3.pro</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">SuperMario_S3.pro</value>
     <value type="QString" key="RunConfiguration.Arguments"></value>
     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>

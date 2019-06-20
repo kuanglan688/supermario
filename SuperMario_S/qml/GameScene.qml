@@ -8,12 +8,15 @@ import "./levels"
 // EMPTY SCENE
 
 SceneBase{
+
     id:gameScene
     gridSize: 32
     sceneAlignmentX: "left"
     sceneAlignmentY: "top"
 
+    focus: true
     property int time: 300
+    property alias player: player
 
     BackgroundImage{
         id:bgImage
@@ -21,66 +24,28 @@ SceneBase{
         property string picture1:"../assets/img/game/PTModelSprite_ID35342.png"
         source: picture1
     }
-/*
-//    Item {
-//        id: container
-//        transformOrigin: Item.TopLeft
-
-//        PhysicsWorld {
-//            id: physicsWorld
-
-//            property int gravityY: 0
-
-//            gravity: Qt.point(0, gravityY)
-
-//            debugDrawVisible: false//这个是是否显示那个物理线，true显示，false不显示
-//            z: 3
-
-//            //            running: true
-
-//            onPreSolve: {
-//                var entityA = contact.fixtureA.getBody().target
-//                var entityB = contact.fixtureB.getBody().target
-
-//                if(entityA.entityType === "platform" && (entityB.entityType === "player" || entityB.entityType === "opponent") && entityB.y + entityB.height > entityA.y + 1 // add +1 to avoid wrong border-line decisions
-//                        || (entityA.entityType === "player" || entityA.entityType === "opponent") && entityB.entityType === "platform" && entityA.y + entityA.height > entityB.y + 1) {
-
-//                    contact.enabled = false
-//                }
-
-//                if(entityA.entityType === "player" && entityB.entityType === "opponent"
-//                        || entityB.entityType === "player" && entityA.entityType === "opponent") {
-//                    contact.enabled = false
-//                }
-//            }
-//        }
-*/
-
-//        EntityManager{
-//        id:entityManger
-//        }
 
     Item {
-         id: container
-         x:  (player.x>480?480-player.x:0)
+        id: container
+        x:  (player.x>480?480-player.x:0)
 
-         Level1{
+        Level1{
             id:level1
 
-         }
-         PhysicsWorld{
-             id: physicalWorld
-             debugDrawVisible:false// debugDrawVisible: false//这个是是否显示那个物理线，true显示，false不显示
-             gravity: Qt.point(0,9)
-             z:3
-         }
-         Player{
-             id:player
-             x:100
-             y:450
-             z:1
-         }
-     }
+        }
+        PhysicsWorld{
+            id: physicalWorld
+            debugDrawVisible:true// debugDrawVisible: false//这个是是否显示那个物理线，true显示，false不显示
+            gravity: Qt.point(0,9)
+            z:3
+        }
+        Player{
+            id:player
+            x:100
+            y:450
+            z:1
+        }
+    }
 
 
 
@@ -100,20 +65,58 @@ SceneBase{
 
     Keys.forwardTo: controller
     TwoAxisController{
-            id :controller
-            onXAxisChanged: {
-                player.changeDirection()
-            }
+        id :controller
+        onXAxisChanged: {
+            player.changeDirection()
+        }
 
-            onInputActionPressed: {
-    //            console.log(actionName+" press " +xAxis+ " y:"+yAxis)
-                if(actionName == "up"){
-                    player.jump()
-                }else{
-                    player.state = "walking"
+        onInputActionPressed: {
+            //            console.log(actionName+" press " +xAxis+ " y:"+yAxis)
+            if(actionName == "up"){
+                player.jump()
+            }else if(actionName == "fire"){
+                if(!bulletalive&&player.alive){
+                    entityId = entityManger.createEntityFromUrlWithProperties(Qt.resolvedUrl("entities/Bullet.qml"), { entityId: "mybullet"})
+                    bulletalive = true
+                    var entity=entityManger.getEntityById(entityId)
+                    var frontx = player.x>480?(player.x-player.width/2 -(player.x-480)):player.x
+                    var backx = player.x>480?(player.x+player.width -(player.x-480)):player.x+player.width/2
+                    entity.x=player.mirror?frontx:backx
+//                    entity.image.x=player.mirror?frontx:backx
+//                    entity.bulletcollider.x=player.mirror?frontx:backx
+//                    entity.bulletcollider.x=entity.x
+//                    entity.bulletcollider.y=entity.y
+
+                    //                    var frontx = player.x>480?(player.x-player.width/2 -(player.x-480)):player.x-player.width/2
+                    //                    var backx = player.x>480?(player.x+player.width/2 -(player.x-480)):player.x+player.width/2
+                    //                    entity.x=player.mirror?frontx:backx
+
+                    entity.y=player.y+player.height*1/2
+//                    entity.image.y=player.y+player.height*1/2
+                    entity.bulletTime.running=true
+                    entity.bulletTime2.running=true
+                    entity.visible=true
+                    bulletTimer.start()
+                    console.log(entity.x+"   "+entity.y)
+
                 }
             }
+
+
         }
+    }
+    property bool bulletalive: false
+    property var entityId
+    Timer{
+        id:bulletTimer
+        repeat: false
+        running: false
+        interval: 4000
+        onTriggered: {
+            entityManger.removeEntityById(entityId)
+            bulletalive  = false
+        }
+    }
 
 
 
@@ -173,5 +176,20 @@ SceneBase{
     MediaSound{
         id:mediaSound
     }
+
+    Bullet{
+        id:bullet
+        visible: false
+    }
+
+    //    Keys.onPressed: {
+    //        if (event.key === Qt.Key_Space)
+    //           {
+    //            bullet.visible=true
+    //            bullet.x=player.x+player.width
+    //            bullet.y=player.y+player.height*1/2
+    //            console.log("bullet")
+    //        }
+    //    }
 
 }
