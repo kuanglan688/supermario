@@ -17,10 +17,8 @@ EntityBase {
 
     function die() {
         mediaSound.gameSound("enemy_killed")
-            alive = false
+        alive = false
         snailImage.opacity=0
-
-
     }
 
 

@@ -8,12 +8,13 @@ Enemy {
     width: image.width
     height: image.height
     variationType: "scorpion"
-    //    entityType: "scorpion"
 
+
+    //图片
     MultiResolutionImage{
         id :image
         anchors.centerIn: parent
-
+        mirror: true
         scale: 0.7
         transformOrigin: Item.Bottom
         opacity: 1
@@ -26,10 +27,10 @@ Enemy {
         property string scorpion4: "../../assets/img/game/PTModelSprite_ID33509.png"
         property string scorpion5: "../../assets/img/game/PTModelSprite_ID33508.png"
         property string scorpion6: "../../assets/img/game/PTModelSprite_ID33507.png"
-
     }
+    property alias mirror: image.mirror
 
-    property int count: 0
+    //蝎子计时器
     Timer{
         id: scorpionTimer
         interval: 120
@@ -45,11 +46,16 @@ Enemy {
             case 4:image.source = image.scorpion5; break;
             case 5:image.source = image.scorpion6; break;
             }
-            if(count%80<40) {scorpion.x -=10;image.mirror = false}
-            else {scorpion.x +=10; image.mirror = true}
+            if(gameState){
+                if(count%80<40) {scorpion.x -=10;image.mirror = false}
+                else {scorpion.x +=10; image.mirror = true}
+            }
         }
     }
+    property int count: 0
+    property bool gameState: true  //判断是否游戏状态
 
+    //玩家区域
     PolygonCollider{
         id:collider
         vertices: [
@@ -75,11 +81,9 @@ Enemy {
         categories: Box.Category3
         collidesWith: Box.Category1|Box.Category2|Box.Category8 // 玩家&&土地
         friction: 0
-
-//        fixture.onBeginContact: {}
     }
-    //    property bool alive: true
 
+    //碰撞区域
     BoxCollider{
         id: sensor
         width: 120*image.scale
@@ -102,10 +106,13 @@ Enemy {
         collisionTestingOnlyMode: true
     }
 
+    //死亡
     function die(){
-        image.opacity  = 0
-        alive = false
-        scorpionTimer.stop()
-        console.log("opponent die")
+        if(gameState){
+            image.opacity  = 0
+            alive = false
+            scorpionTimer.stop()
+            console.log("Scorpion die")
+        }
     }
 }

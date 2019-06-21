@@ -1,34 +1,102 @@
 import Felgo 3.0
 import QtQuick 2.0
 
+import "./scene"
+import "./entities"
 GameWindow {
     id: gameWindow
 
-    // You get free licenseKeys from https://felgo.com/licenseKey
-    // With a licenseKey you can:
-    //  * Publish your games & apps for the app stores
-    //  * Remove the Felgo Splash Screen or set a custom one (available with the Pro Licenses)
-    //  * Add plugins to monetize, analyze & improve your apps (available with the Pro Licenses)
-    //licenseKey: "<generate one from https://felgo.com/licenseKey>"
-
-    activeScene: gameScene
-
-    // the size of the Window can be changed at runtime by pressing Ctrl (or Cmd on Mac) + the number keys 1-8
-    // the content of the logical scene size (480x320 for landscape mode by default) gets scaled to the window size based on the scaleMode
-    // you can set this size to any resolution you would like your project to start with, most of the times the one of your main target device
-    // this resolution is for iPhone 4 & iPhone 4S
-    screenWidth: 960
     screenHeight: 640
+    screenWidth: 960
 
-//    property alias entityManger: entityManger
-    EntityManager{
-        id:entityManger
-        entityContainer: gameScene
-    }
+    activeScene: menuScene //设置激活窗口
+    state: "menu" //初始状态 menu
 
+    //游戏画面
     GameScene{
-        id:gameScene
+        id: gameScene
     }
+    //菜单界面
+    MenuScene{
+        id: menuScene
+    }
+    //选项界面
+    OptionScene{
+        id:optionScene
+    }
+    //排行榜界面
+    RankScene{
+        id: rankScene
+    }
+    //选关界面
+    LevelScene{
+        id: levelScene
+    }
+
+    //实体管理类
+    EntityManager{
+        id: manager
+        entityContainer: gameScene.container
+    }
+
+    //设置不同状态的gameWindow.activeScene 和Scene.opacity
+    states: [
+        State {
+            name: "menu"
+            PropertyChanges {
+                target: gameWindow
+                activeScene: menuScene
+            }
+            PropertyChanges {
+                target: menuScene
+                opacity: 1
+            }
+        },
+        State {
+            name: "option"
+            PropertyChanges {
+                target: gameWindow
+                activeScene: optionScene
+            }
+            PropertyChanges {
+                target: optionScene
+                opacity: 1
+            }
+        },
+        State {
+            name: "ranking"
+            PropertyChanges {
+                target: gameWindow
+                activeScene: rankScene
+            }
+            PropertyChanges {
+                target: rankScene
+                opacity: 1
+            }
+        },
+        State {
+            name: "level"
+            PropertyChanges {
+                target: gameWindow
+                activeScene: levelScene
+            }
+            PropertyChanges {
+                target: levelScene
+                opacity: 1
+            }
+        },
+        State {
+            name: "game"
+            PropertyChanges {
+                target: gameWindow
+                activeScene: gameScene
+            }
+            PropertyChanges {
+                target: gameScene
+                opacity: 1
+            }
+        }
+    ]
 
 
 }

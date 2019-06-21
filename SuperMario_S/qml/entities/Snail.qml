@@ -10,13 +10,8 @@ Enemy{
     width: snailImage.width
     height: snailImage.height
 
-
-
     property int speed: 70
     property int direction: -1
-
-    property alias horizontalVelocity: collider.linearVelocity.x
-    property alias verticalVelocity: collider.linearVelocity.y
 
     MultiResolutionImage{
         id:snailImage
@@ -35,8 +30,6 @@ Enemy{
     property int snailstate: 0
     property  int snailWalkingCount: 0
     state: snailstate==0 ? "walking":"die"
-
-
 
     PolygonCollider{
         id:collider
@@ -57,10 +50,8 @@ Enemy{
         collidesWith: Box.Category1 | Box.Category2 |Box.Category8 |Box.Category14
 
         onLinearVelocityChanged: {
-
             if(linearVelocity.x === 0 )
                 direction *= -1
-
             linearVelocity.x = direction*speed
         }
     }
@@ -86,7 +77,6 @@ Enemy{
         collidesWith: Box.Category8
 
     }
-
 
     Timer{
         id:snailTimer

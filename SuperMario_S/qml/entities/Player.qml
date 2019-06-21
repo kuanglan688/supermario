@@ -96,19 +96,16 @@ EntityBase {
                 mediaSound.gameSound("diamond")
                 otherEntiry.collect()
                 diamondnumber ++
-            }else if(otherEntiry.entityType === "home")/*人物在房子那里消失*/
-            {
+            }else if(otherEntiry.entityType === "home"){
                 mediaSound.gameSound("running_time")
                 playerImage.opacity=0
                 collider.active=false
             }else if(otherEntiry.entityType === "opponent"){
                 player.die();
-            }else if(otherEntiry.entityType ==="home")
-            {
+            }else if(otherEntiry.entityType ==="home"){
                 mediaSound.gameSound("running_time")
                 player.opacity=0
-            }else if(otherEntiry.entityType === "magic"&&count==1)
-            {
+            }else if(otherEntiry.entityType === "magic"&&count==1){
 
                 mediaSound.gameSound("mushroom_catch")
 
