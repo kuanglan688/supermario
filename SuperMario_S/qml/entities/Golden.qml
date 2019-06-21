@@ -4,17 +4,19 @@ import QtQuick 2.0
 TiledEntityBase {
 
     entityType: "golden"
-    width: image.width
-    height: image.height
+    width: image.width*image.scale
+    height: image.height*image.scale
 
-//    signal sendSignal()
     property alias active: collider.active
 
+    //精灵动画
     SpriteSequence{
+
         id:image
         width:64
         height: 64
-        anchors.horizontalCenter: parent.horizontalCenter
+        scale: 0.8
+        anchors.centerIn: parent
         interpolate: false
         goalSprite: ""
 
@@ -45,6 +47,7 @@ TiledEntityBase {
         }
     }
 
+    //碰撞区域
     BoxCollider{
         width: parent.width
         height: parent.height
@@ -52,11 +55,11 @@ TiledEntityBase {
         active:true
         bodyType: Body.Static
         categories: Box.Category11
-
+        collidesWith: Box.Category1 | Box.Category2
     }
 
-    function show()
-    {
+    //变身
+    function show(){
         start.to={"block":1}
     }
 }

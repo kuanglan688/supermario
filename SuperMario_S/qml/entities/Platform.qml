@@ -3,12 +3,15 @@ import QtQuick 2.0
 
 TiledEntityBase{
 
-    id:ground
+    id:platform
     entityType: "platform"
 
-    width: 130
+    width: 130*widthSize
     height: 50
+
     property int widthSize: 1
+
+    //重复platform
     Row{
         Repeater{
             model: widthSize
@@ -19,6 +22,7 @@ TiledEntityBase{
         }
     }
 
+    //碰撞区域
     BoxCollider{
         id: collider
         bodyType: Body.Static

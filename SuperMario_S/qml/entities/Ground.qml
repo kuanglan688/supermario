@@ -4,10 +4,9 @@ import QtQuick 2.0
 TiledEntityBase {
 
     id:ground
-    //    entityId: "entity"
     entityType: "ground"
-    //    property alias source: image.source
 
+    //排序的地
     Column{
         Row{
             Repeater{
@@ -35,13 +34,14 @@ TiledEntityBase {
         }
     }
 
+    //碰撞区域
     BoxCollider{
         id: collider
         anchors.fill: parent
         bodyType: Body.Static
 
         categories: Box.Category8
-        collidesWith:Box.Category1|Box.Category2|Box.Category3|Box.Category12|Box.Category14
+        collidesWith:Box.Category1|Box.Category2|Box.Category3|Box.Category11|Box.Category12|Box.Category14|Box.Category15
     }
 
 }

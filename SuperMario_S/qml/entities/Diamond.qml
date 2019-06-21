@@ -9,20 +9,19 @@ TiledEntityBase {
     width: diamondImage.width*diamondImage.scale
     height: diamondImage.height*diamondImage.scale
 
+    //图片
     MultiResolutionImage{
         id:diamondImage
         anchors.centerIn: parent
-        scale: 0.8
         visible: !collected
-        fillMode: Image.PreserveAspectFit
+        fillMode: Image.Stretch
         source: "../../assets/img/game/PTModelSprite_ID31370.png"
 
     }
 
+    //碰撞区域
     BoxCollider{
         id:collider
-        width: parent.width
-        height: parent.width
         active: !collected
         anchors.centerIn: parent
 
@@ -31,16 +30,18 @@ TiledEntityBase {
         collidesWith: Box.Category1
     }
 
-    Glow{//发光效果
+    //发光效果
+    Glow{
         anchors.fill: diamondImage
         source: diamondImage
         radius: 16
         samples: 24
-        color: "white"
+        color: "#99FF00"
         spread: 0.5
         visible: !collected
-
     }
+
+    //是否被收集
     property bool collected: false
     function collect(){
         collected = true

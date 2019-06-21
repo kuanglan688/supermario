@@ -17,7 +17,7 @@ Enemy {
         mirror: true
         scale: 0.7
         transformOrigin: Item.Bottom
-        opacity: 1
+        opacity: (alive?1:0)
         Behavior on opacity {NumberAnimation{duration: 2000}} //死亡动画
 
 
@@ -47,15 +47,15 @@ Enemy {
             case 5:image.source = image.scorpion6; break;
             }
             if(gameState){
-                if(count%80<40) {scorpion.x -=10;image.mirror = false}
-                else {scorpion.x +=10; image.mirror = true}
+                if(count%80<40) {scorpion.x -=10;scorpion.mirror = false;/*image.mirror = false*/}
+                else {scorpion.x +=10;;scorpion.mirror = true; /*image.mirror = true*/}
             }
         }
     }
     property int count: 0
     property bool gameState: true  //判断是否游戏状态
 
-    //玩家区域
+    //蝎子区域
     PolygonCollider{
         id:collider
         vertices: [
@@ -80,10 +80,10 @@ Enemy {
         bodyType: Body.Dynamic
         categories: Box.Category3
         collidesWith: Box.Category1|Box.Category2|Box.Category8 // 玩家&&土地
-        friction: 0
+        friction: 1
     }
 
-    //碰撞区域
+    //蝎子计时器区域
     BoxCollider{
         id: sensor
         width: 120*image.scale
@@ -109,10 +109,9 @@ Enemy {
     //死亡
     function die(){
         if(gameState){
-            image.opacity  = 0
             alive = false
             scorpionTimer.stop()
-            console.log("Scorpion die")
+//            console.log("Scorpion die")
         }
     }
 }

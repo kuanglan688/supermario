@@ -2,62 +2,53 @@ import Felgo 3.0
 import QtQuick 2.12
 
 TiledEntityBase {
-
-    id:magicBase
+    id:magic
     entityType: "magic"
-    width: magicImage.width
-    height: magicImage.height
+    width: magicImage.width*magicImage.scale
+    height: magicImage.height*magicImage.scale
 
-    signal visable();
-
-    property alias magic: magicImage
-    property alias collider: collider
-
-    property bool check: false
-
-    onVisable:{
-            magicImage.visible=false
-    }
+    //图片
     MultiResolutionImage{
-
         id:magicImage
-        visible: true
-        opacity: 0
-
+        visible: visual
         width: 64
         height: 64
-
-
-
-        NumberAnimation {
-            id:numberAnimation
-            running: false
-            target: magicImage
-            property: "y"
-            duration: 2010
-            to:-54
-            easing.type: Easing.InOutQuad
-
-        }
-
+        scale: 0.8
+        anchors.centerIn: parent
         fillMode: Image.PreserveAspectFit
         source: "../../assets/img/game/magic.png"
     }
 
+    //动画
+    NumberAnimation {
+        id:numberAnimation
+        running: visual
+        target: magic
+        property: "y"
+        duration: 2010
+        to:magic.y - magic.height
+        easing.type: Easing.InOutQuad
+    }
+
+    //碰撞区域
     BoxCollider{
         id:collider
-        anchors.fill: magicImage
+        anchors.fill: parent
+        active:!hasEated
         collisionTestingOnlyMode: true//这样就只有碰撞检测没有重力
         bodyType:Body.Dynamic
         categories: Box.Category16
         collidesWith: Box.Category1 | Box.Category2|Box.Category11
     }
 
-    function showimage(){
-        magicImage.opacity = 1
-        numberAnimation.running=true
-    }
+    property bool visual: false
+    property bool hasEated: false
 
+    function beEated(){
+        magicImage.visible=false
+        visual = false
+        hasEated = true
+    }
 }
 
 

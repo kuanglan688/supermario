@@ -8,6 +8,7 @@ TiledEntityBase {
     width: image.width*image.scale
     height: image.height*image.scale
 
+    //图片
     MultiResolutionImage{
         id:image
         scale: 1.5
@@ -16,6 +17,7 @@ TiledEntityBase {
         source: "../../assets/img/game/mushroom.png"
     }
 
+    //碰撞区域
     BoxCollider{
         id: collider
         width: parent.width

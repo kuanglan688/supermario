@@ -14,9 +14,9 @@ SceneBase{
     sceneAlignmentX: "left"
     sceneAlignmentY: "top"
 
-    //    focus: true
-
     property alias player: player
+    property alias bullet: bullet
+
 
     //背景图片
     BackgroundImage{
@@ -32,9 +32,13 @@ SceneBase{
         id: container
         x:  (player.x>480?480-player.x:0)
         //关卡
-        Level1{
-            id:level1
+//        Level1{
+//            id:level1
+//        }
+        TestLevel{
+            id: testlevel
         }
+
         //物理世界
         PhysicsWorld{
             id: physicalWorld
@@ -59,20 +63,20 @@ SceneBase{
     //重置子弹位置
     function resetBullet(){
         bullet.visible = true
+        bullet.collider.active = true
         var frontx = player.x>480?(480-player.width/2):player.x
         var backx = player.x>480?(480+player.width):player.x+player.width/2
         //bullet.x=player.mirror?frontx:backx
         bullet.x=player.x
         bullet.y=player.y+player.height*1/2
         bullet.bulletTime.running=true
-        bullet.bulletTime2.running=true
+        bullet.bulletTime2.start()
         bulletTimer.start()
         bulletAlive = true
         bullet.image.visible = true
-
+        gameScene.mirror = player.mirror
     }
-
-
+    property bool mirror: false
 
     //控制器
     Keys.forwardTo: controller
@@ -81,7 +85,7 @@ SceneBase{
         onInputActionPressed: {
             if(actionName == "up"){ //跳跃
                 player.jump()
-            }else if(actionName == "fire"){ //开火
+            }else if(actionName == "fire"&&player.couldFire){ //开火
                 if(!bulletAlive&&player.alive){ //子弹不存在且玩家活时
                     resetBullet()
                 }
@@ -95,6 +99,7 @@ SceneBase{
 
     property bool bulletAlive: false //控制子弹
 
+    property alias bulletTimer: bulletTimer
     //子弹存在计时器
     Timer{
         id:bulletTimer
@@ -103,8 +108,8 @@ SceneBase{
         interval: 4000
         onTriggered: {
             bulletAlive  = false
-            bullet.bulletTime2.stop()
-            //console.log("Wow! bullet dead")
+//            bullet.bulletTime2.stop()
+            console.log("Wow! bullet dead")
         }
     }
 
@@ -162,7 +167,8 @@ SceneBase{
         anchors.right:gameScene.gameWindowAnchorItem.right
         anchors.top: gameScene.gameWindowAnchorItem.top
         image.source: "../../assets/img/game/home.png"
-        mouseArea.onClicked: suspend.visible=true
+        mouseArea.onClicked: gameWindow.state = "menu"
+//        mouseArea.onClicked: suspend.visible=true
     }
 
     //音乐控制

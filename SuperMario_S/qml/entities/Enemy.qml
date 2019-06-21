@@ -6,21 +6,13 @@ EntityBase {
 
     property int column
     property int row
-
-
-    Component.onCompleted: console.log(startX)
-
-    property bool alive: true
-
     x:(column-1)*gameScene.gridSize
     y:gameScene.gridSize*20 - row*gameScene.gridSize
+
+    property bool alive: true
 
     function die() {
         mediaSound.gameSound("enemy_killed")
         alive = false
-        snailImage.opacity=0
     }
-
-
-
 }

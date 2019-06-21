@@ -2,27 +2,22 @@ import QtQuick 2.0
 import Felgo 3.0
 
 Enemy{
-
+    id:bat
     entityType: "opponent"
     variationType: "bat"
-    id:bat
-    //state: "flying"
 
     width:  batImage.width*batImage.scale
     height: batImage.height*batImage.scale
 
-    property int count: 0
-    property bool batState: true
-
-    state: batState == true ? "flying" : "die"
-
+    //图片
     MultiResolutionImage{
         id:batImage
         scale: 0.5
-        // transformOrigin: Item.Top //从图片底部中心缩放
+        opacity: (alive?1:0)
+        // transformOrigin: Item.Top //从图片底部中心缩放 here useless
         anchors.centerIn:  parent
         Behavior on opacity{
-            NumberAnimation {duration: 20 }
+            NumberAnimation {duration: 2000 }
         }
         property string bat1 :"../../assets/img/game/PTModelSprite_ID32752.png"
         property string bat2 :"../../assets/img/game/PTModelSprite_ID32754.png"
@@ -31,43 +26,39 @@ Enemy{
         property string bat5 :"../../assets/img/game/PTModelSprite_ID32757.png"
     }
 
+    //计时器
     Timer{
         id: batTimer
-        interval: 400
+        interval: 120
         repeat: true
         running: true
 
         onTriggered: {
-            if(bat.state == "flying"){
-                switch(count % 5 ){
-                case 0: batImage.source = batImage.bat1; break;
-                case 1: batImage.source = batImage.bat2; break;
-                case 2: batImage.source = batImage.bat3; break;
-                case 3: batImage.source = batImage.bat4; break;
-                case 4: batImage.source = batImage.bat5; break;
-                }
-                count++;
+            switch(count % 5 ){
+            case 0: batImage.source = batImage.bat1; break;
+            case 1: batImage.source = batImage.bat2; break;
+            case 2: batImage.source = batImage.bat3; break;
+            case 3: batImage.source = batImage.bat4; break;
+            case 4: batImage.source = batImage.bat5; break;
+            }
+            count++;
 
-                if(count%20<10){
-                    bat.x+=10;
-                    batImage.mirror = true
-                }
-                else {
-                    bat.x-=10;
-                    batImage.mirror = false
-                }
-            }else if(bat.state == "die"){
-                  bat.die();
+            if(count%120<60){
+                bat.x+=5;
+                batImage.mirror = true
+            }
+            else {
+                bat.x-=5;
+                batImage.mirror = false
             }
         }
     }
+    property int count: 0
 
-
+    //碰撞区域
     PolygonCollider{
         id:collider
-        active: true
-//        anchors.fill: parent
-//        anchors.centerIn: parent
+        active: alive
         vertices:
             [
             Qt.point(10,1),
@@ -78,7 +69,6 @@ Enemy{
             Qt.point(3,67),
             Qt.point(3,50)
         ]
-
         //                 [
         //                    Qt.point(5,1),
         //                    Qt.point(132,29),
@@ -88,22 +78,18 @@ Enemy{
         //                    Qt.point(4,100),
         //                    Qt.point(6,59)
         //                ]
-        bodyType: Body.Dynamic
-
+        bodyType: Body.Static
         categories: Box.Category5
-        collidesWith: Box.Category1 | Box.Category2
-        friction: 0
-
+        collidesWith: Box.Category1 | Box.Category2|Box.Category14
+        friction: 1
         collisionTestingOnlyMode: true
-
     }
 
-  function die()
-  {
-      batImage.opacity = 0;
-      collider.active =false;
-
-  }
+    //死亡
+    function die(){
+        alive = false
+        batTimer.stop()
+    }
 
 }
 

@@ -2,7 +2,6 @@ import Felgo 3.0
 import QtQuick 2.0
 
 EntityBase {
-
     id: player
     entityType: "player"
     state:"standing"
@@ -11,10 +10,8 @@ EntityBase {
     width: playerImage.width
     height: playerImage.height
 
-//    property bool check: false
-    property int count: 0
-    signal send()
 
+    //图片
     MultiResolutionImage{
         id: playerImage
         scale: isbig?1:0.6 //缩放
@@ -38,6 +35,7 @@ EntityBase {
     property alias mirror: playerImage.mirror
 
 
+    //任务碰撞区域
     PolygonCollider{
         id:collider
         vertices:isbig?
@@ -67,7 +65,7 @@ EntityBase {
         active: alive
         bodyType: Body.Dynamic //动态的物体之间才可以碰撞
         categories: Box.Category1
-        collidesWith: Box.Category3|Box.Category7|Box.Category8|Box.Category11|Box.Category12|Box.Category11|Box.Category16|Box.Category9//与Box.Category3对手&&Box.Category8地板
+        collidesWith: Box.Category3|Box.Category5|Box.Category7|Box.Category8|Box.Category9|Box.Category10|Box.Category11|Box.Category12| Box.Category13|Box.Category15|Box.Category16//与Box.Category3对手&&Box.Category8地板
 
         friction: 0  //摩擦力
 
@@ -87,7 +85,7 @@ EntityBase {
 
                 couldjumptwotimes = true
                 doublejump = true
-                console.log("mushroom is collected")
+                //console.log("mushroom is collected")
             }else if(otherEntiry.entityType === "coin"){
                 mediaSound.gameSound("coin")
                 otherEntiry.collect()
@@ -102,19 +100,22 @@ EntityBase {
                 collider.active=false
             }else if(otherEntiry.entityType === "opponent"){
                 player.die();
+//                console.log("player die  because of here")
             }else if(otherEntiry.entityType ==="home"){
                 mediaSound.gameSound("running_time")
                 player.opacity=0
-            }else if(otherEntiry.entityType === "magic"&&count==1){
-
+            }else if(otherEntiry.entityType === "magic"&&couldEat){
                 mediaSound.gameSound("mushroom_catch")
-
-                otherEntiry.visable();//分送信号
-                console.log("collider")
-            }else if(otherEntiry.entityType === "water")
+                couldEat = false
+                couldFire = true
+                otherEntiry.beEated();
+            }else if(otherEntiry.entityType === "water"){
                 player.die();
-            else if(otherEntiry.entityType === "spikerock")
+            }else if(otherEntiry.entityType === "spikerock"){
                 player.die();
+            }else if(otherEntiry.entityType === "trampoline"){
+                collider.linearVelocity.y = -420
+            }
         }
 
     }
@@ -122,12 +123,18 @@ EntityBase {
     PolygonCollider{
         id:topCollider
 
-        vertices: [
-            Qt.point(29,0),
-            Qt.point(19,7),
-            Qt.point(19,10),
-            Qt.point(40,10)
-        ]
+        vertices: isbig?[
+                             Qt.point(29,0),
+                             Qt.point(19,7),
+                             Qt.point(19,10),
+                             Qt.point(40,10)
+                         ]:
+                         [
+                             Qt.point(29,0+40),
+                             Qt.point(19,7+40),
+                             Qt.point(19,10+40),
+                             Qt.point(40,10+40)
+                         ]
         active: alive
         bodyType: Body.Dynamic
         categories: Box.Category2
@@ -138,53 +145,25 @@ EntityBase {
             var otherEntity = other.getBody().target
 
             if(otherEntity.entityType==="magic"){
-                send()
-//                otherEntity.check=true
+                checkTime.start()
                 console.log("collider magic")
                 mediaSound.gameSound("hit_block")
-                otherEntity.showimage()
+                otherEntity.visual = true
             }
-            if(otherEntity.entityType==="golden")
-            {
+            if(otherEntity.entityType==="golden"){
                 console.log("collider golden")
-                 otherEntity.show()
+                otherEntity.show()
             }
 
         }
 
         friction: 0
 
-
-
-
     }
-
-    Timer{
-        id:checkTime
-        running: false
-        interval: 1000
-        onTriggered: {
-            count++
-            console.log(count)
-        }
-
-    }
-
-
-    onSend: {
-
-        checkTime.running=true
-
-    }
-    property int coinnumber: 0 //金币数目
-    property int diamondnumber: 0 //钻石数目
-    property int accelerateForce: 200 //施加于player上的力
-    property int maxspeed: 250 //最大速度
-
 
     BoxCollider{
         id: boxCollider
-        width: 77*playerImage.scale-40
+        width: 77*playerImage.scale-10
         height: 20*playerImage.scale
 
         //调试时显示传感器的位置
@@ -204,7 +183,7 @@ EntityBase {
         bodyType: Body.Dynamic
         active: collider.active
         categories: Box.Category2
-        collidesWith: Box.Category3|Box.Category8|Box.Category11//11是金色的wall
+        collidesWith: Box.Category3|Box.Category5|Box.Category8|Box.Category11//11是金色的wall
 
         fixture.onBeginContact: {
             var otherEntiry = other.getBody().target
@@ -216,10 +195,22 @@ EntityBase {
                 //                console.log("Now You Could Jump Two Times")
             } else if(otherEntiry.entityType === "opponent"){
                 otherEntiry.die()
+//                console.log("opponent die because of here")
             }
         }
     }
 
+    Timer{
+        id:checkTime
+        running: false
+        repeat: false
+        interval: 1000
+        onTriggered: {
+            player.couldEat = true
+            console.log("checkTimer changed the coludEated be true")
+        }
+
+    }
 
     Timer{
         id:playerTimer
@@ -270,6 +261,15 @@ EntityBase {
     }
     property int playerWalkingCount: 0 //player walking 时的state
 
+    property int coinnumber: 0 //金币数目
+    property int diamondnumber: 0 //钻石数目
+    property int accelerateForce: 200 //施加于player上的力
+    property int maxspeed: 250 //最大速度
+
+    property bool couldEat: false //判断是否能吃炮弹
+    property bool couldFire: false //是否能发射炮弹
+    property bool couldjumptwotimes: true //标记能否跳跃两次
+
     //跳跃
     function jump(){
 
@@ -285,7 +285,6 @@ EntityBase {
     }
     property bool enablejump: true  //第一次跳跃
     property bool doublejump: false  //第二次跳跃
-    property bool couldjumptwotimes: true //标记能否跳跃两次
     property int firstjumpspeed: -320  //第一次跳起速度
     property int secondjumpspeed: -250 //第二次跳起速度
 
@@ -306,7 +305,7 @@ EntityBase {
         collider.linearVelocity.x =0
         collider.force = Qt.point(0,0)
         deadTimer.start()
-        console.log("player die")
+//        console.log("player die")
     }
     //死亡计时器
     Timer{
@@ -318,7 +317,4 @@ EntityBase {
             alive = false
         }
     }
-
-
-
 }

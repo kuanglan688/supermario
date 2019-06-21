@@ -16,16 +16,6 @@ TiledEntityBase{
     property alias trampoline2 : trampoline2
     property alias trampoline3 : trampoline3
 
-//    function push(){
-//         trampoline1.to={"trampoline2":1};
-//         trampoline2.to={"trampoline3":1};
-
-//    }
-//    function pob(){
-//        trampoline3.to={"trampoline2":1};
-//        trampoline2.to={"trampoline1":1};
-//    }
-
     SpriteSequence{
         id:trampolineImage
         scale: 0.6
@@ -79,7 +69,7 @@ TiledEntityBase{
         collisionTestingOnlyMode: false
 
         categories: Box.Category15
-        collidesWith:  Box.Category2|Box.Category8
+        collidesWith:  Box.Category1|Box.Category8
 
 
     }

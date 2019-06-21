@@ -9,9 +9,11 @@ TiledEntityBase {
     width: image.width*image.scale
     height: image.height*image.scale
 
+    //图片
+    property alias scale: image.scale
     MultiResolutionImage{
         id: image
-        scale: 0.25
+        scale: 0.15
         anchors.centerIn: parent
         visible: !collected
         fillMode: Image.PreserveAspectFit
@@ -21,6 +23,17 @@ TiledEntityBase {
         property string coin4: "../../assets/img/game/PTModelSprite_ID21675.png"
     }
 
+    //碰撞区域
+    BoxCollider{
+        id : collider
+        bodyType: Body.Dynamic
+        active: !collected
+        collisionTestingOnlyMode: true //无重力
+        categories: Box.Category7
+        collidesWith: Box.Category1
+    }
+
+    //计时器
     property int count: 0
     Timer{
         id: coinTimer
@@ -38,15 +51,8 @@ TiledEntityBase {
         }
     }
 
-    BoxCollider{
-        id : collider
-        bodyType: Body.Dynamic
-        active: !collected
-        collisionTestingOnlyMode: true //无重力
-        categories: Box.Category7
-        collidesWith: Box.Category1
-    }
 
+    //被收集
     property bool collected : false
     function collect(){
         collected = true

@@ -13,9 +13,10 @@ Enemy{
     property int speed: 70
     property int direction: -1
 
+    //图片
     MultiResolutionImage{
         id:snailImage
-
+        opacity: alive?1:0
         Behavior on opacity {
             NumberAnimation{ duration: 2000}
         }
@@ -24,13 +25,12 @@ Enemy{
         property string snailwalking_2: "../../assets/img/game/PTModelSprite_ID33375.png"
         property string snailwalking_3: "../../assets/img/game/PTModelSprite_ID33376.png"
         property string snailwalking_4: "../../assets/img/game/PTModelSprite_ID33377.png"
-
-
     }
+
     property int snailstate: 0
     property  int snailWalkingCount: 0
-    state: snailstate==0 ? "walking":"die"
 
+    //蜗牛区域
     PolygonCollider{
         id:collider
         active: alive
@@ -84,21 +84,16 @@ Enemy{
         repeat: true
         running: true
         onTriggered: {
-            if(snail.state=="walking"){
-                switch(snailWalkingCount%4){
-                case 0:snailImage.source=snailImage.snailwalking_1;break;
-                case 1:snailImage.source=snailImage.snailwalking_2;break;
-                case 2:snailImage.source=snailImage.snailwalking_3;break;
-                case 3:snailImage.source=snailImage.snailwalking_4;break;
-                }
-                snailWalkingCount++;
-            }else if(snail.state=="die"){
-                snailImage.opacity=0
+            switch(snailWalkingCount%4){
+            case 0:snailImage.source=snailImage.snailwalking_1;break;
+            case 1:snailImage.source=snailImage.snailwalking_2;break;
+            case 2:snailImage.source=snailImage.snailwalking_3;break;
+            case 3:snailImage.source=snailImage.snailwalking_4;break;
             }
-
+            snailWalkingCount++;
         }
-
     }
+
 
     Timer{
         id:snailTimer2
@@ -108,6 +103,13 @@ Enemy{
         onTriggered: {
             collider.linearVelocity.x=0
         }
+    }
+
+    function die() {
+        mediaSound.gameSound("enemy_killed")
+        alive = false
+        snailTimer.stop()
+        snailTimer2.stop()
     }
 }
 

@@ -5,16 +5,18 @@ TiledEntityBase{
 
     entityType: "opponent"
     variationType: "wheel"
-    width: 80
-    height: 120
+//    width: 80
+//    height: 120
 
 
+    width: wheelImage.width*wheelImage.scale
+    height: wheelImage.height*wheelImage.scale
 
+    //图片
     MultiResolutionImage{
-
         id:wheelImage
-        width:parent.width
-        height: parent.height
+        scale: 0.1
+        anchors.centerIn: parent
         fillMode: Image.PreserveAspectFit
 
         source: "../../assets/img/game/3691857a-90cb-11e9-adae-5452007b698aOri"
@@ -28,6 +30,14 @@ TiledEntityBase{
             property: "rotation"
             duration: 3000
         }
+    }
+
+    //碰撞区域
+    BoxCollider{
+        id:collider
+        anchors.fill: parent
+        collisionTestingOnlyMode: true
+        categories: Box.Category5
     }
 }
 

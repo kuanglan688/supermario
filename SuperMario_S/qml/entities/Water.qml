@@ -34,7 +34,7 @@ TiledEntityBase {
             }
         }
     }
-
+    //碰撞区域
     BoxCollider{
         id: collider
         anchors.fill: parent

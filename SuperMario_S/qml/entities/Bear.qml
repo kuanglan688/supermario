@@ -2,27 +2,21 @@ import QtQuick 2.0
 import Felgo 3.0
 
 Enemy{
-
+    id:bear
     entityType: "opponent"
     variationType: "bear"
-    id:bear
-
 
     width:  bearImage.width*bearImage.scale
     height: bearImage.height*bearImage.scale
 
-    property int count: 0
-    property bool bearState: true
-
-    state: bearState == true ? "walking" : "die"
-
+    //图片
     MultiResolutionImage{
         id:bearImage
         scale: 0.5
-        // transformOrigin: Item.Top //从图片底部中心缩放
+        opacity: (alive?1:0)
         anchors.centerIn:  parent
         Behavior on opacity{
-            NumberAnimation {duration: 20 }
+            NumberAnimation {duration: 2000 }
         }
         property string bear1 :"../../assets/img/game/PTModelSprite_ID30184.png"
         property string bear2 :"../../assets/img/game/PTModelSprite_ID30185.png"
@@ -32,41 +26,40 @@ Enemy{
         property string bear6 :"../../assets/img/game/PTModelSprite_ID30189.png"
     }
 
+    //计时器
     Timer{
         id: bearTimer
-        interval: 400
+        interval: 120
         repeat: true
         running: true
 
         onTriggered: {
-            if(bear.state == "walking"){
-                switch(count % 6 ){
-                case 0: bearImage.source = bearImage.bear1; break;
-                case 1: bearImage.source = bearImage.bear2; break;
-                case 2: bearImage.source = bearImage.bear3; break;
-                case 3: bearImage.source = bearImage.bear4; break;
-                case 4: bearImage.source = bearImage.bear5; break;
-                case 5: bearImage.source = bearImage.bear6; break;
-                }
-                count++;
+            switch(count % 6 ){
+            case 0: bearImage.source = bearImage.bear1; break;
+            case 1: bearImage.source = bearImage.bear2; break;
+            case 2: bearImage.source = bearImage.bear3; break;
+            case 3: bearImage.source = bearImage.bear4; break;
+            case 4: bearImage.source = bearImage.bear5; break;
+            case 5: bearImage.source = bearImage.bear6; break;
+            }
+            count++;
 
-//                if(count%20<10){
-//                    bear.x+=10;
-//                    bearImage.mirror = true
-//                }
-//                else {
-//                    bear.x-=10;
-//                    bearImage.mirror = false
-//                }
-            }else if(bear.state == "die"){
-                  bear.die();
+            if(count%120<60){
+                bear.x+=5;
+                bearImage.mirror = true
+            }
+            else {
+                bear.x-=5;
+                bearImage.mirror = false
             }
         }
     }
+    property int count: 0
 
+    //碰撞区域
     PolygonCollider{
         id:collider
-        active: true
+        active: alive
         vertices:
             [
             Qt.point(10,1),
@@ -77,22 +70,21 @@ Enemy{
             Qt.point(3,67),
             Qt.point(3,50)
         ]
+
         bodyType: Body.Dynamic
 
         categories: Box.Category3
-        collidesWith: Box.Category1 | Box.Category2
-        friction: 0
-
-        collisionTestingOnlyMode: true
-
+        collidesWith: Box.Category1 | Box.Category2| Box.Category8|Box.Category14
+        friction: 1 //设置摩擦力
+        collisionTestingOnlyMode: false
     }
 
-  function die()
-  {
-      bearImage.opacity = 0;
-      collider.active =false;
-
-  }
+    //死亡
+    function die()
+    {
+        alive = false
+        bearTimer.stop()
+    }
 
 }
 

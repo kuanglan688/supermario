@@ -76,4 +76,5 @@ DISTFILES += \
     qml/entities/Golden.qml \
     qml/entities/Wall.qml \
     qml/entities/Magic.qml \
-    qml/entities/Bullet.qml
+    qml/entities/Bullet.qml \
+    qml/levels/TestLevel.qml

@@ -22,9 +22,6 @@ TiledEntityBase {
             frameWidth: 64
             frameHeight: 64
             frameDuration: 100//每帧存在时间
-
         }
-
-}
-
+    }
 }

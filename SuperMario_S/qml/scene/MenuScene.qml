@@ -88,7 +88,7 @@ SceneBase {
             onXAxisChanged: player.changeDirection()
         }
         property alias controller: controller
-        Player{id:player;x:-50;y:100;z:-1;maxspeed: 100}
+        Player{id:player;x:-50;y:100;z:-1;maxspeed: 100;isbig: false}
         Scorpion{id: scorpion; x: -100; y:100; gameState: false}
 
         Timer{
@@ -116,6 +116,7 @@ SceneBase {
         }
         Coin{
             id: coin
+            scale: 0.25
             x:menuScene.width - coin.width*2
             y:coin.height
         }
