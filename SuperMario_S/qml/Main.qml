@@ -3,6 +3,7 @@ import QtQuick 2.0
 
 import "./scene"
 import "./entities"
+import "./common"
 GameWindow {
     id: gameWindow
 
@@ -11,6 +12,12 @@ GameWindow {
 
     activeScene: menuScene //设置激活窗口
     state: "menu" //初始状态 menu
+    onStateChanged: {
+        if(music)
+            mediasound.handleMusic()
+        console.log("Here Main && Current State:"+state)
+    }
+
 
     //游戏画面
     GameScene{
@@ -37,6 +44,11 @@ GameWindow {
     EntityManager{
         id: manager
         entityContainer: gameScene.container
+    }
+    //音乐管理类
+//    property alias mediasound: mediasound
+    MediaSound{
+        id: mediasound
     }
 
     //设置不同状态的gameWindow.activeScene 和Scene.opacity
@@ -97,6 +109,24 @@ GameWindow {
             }
         }
     ]
+
+    function playerSound(object){
+        if(sound)
+            mediasound.gameSound(object)
+    }
+
+    //option 音效有无控制
+    property bool music: true
+    property bool sound: true
+    onMusicChanged: {
+        if(music)
+            mediasound.handleMusic()
+        else {
+            mediasound.menuBgMusic.stop()
+            mediasound.levelBgMusic.stop()
+            mediasound.gameBgMusic.stop()
+        }
+    }
 
 
 }

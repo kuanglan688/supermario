@@ -84,13 +84,15 @@ SceneBase {
                     MouseArea{
                         anchors.fill: parent
                         onClicked: {
-                            if(music.opacity == 1.0)
-                                music.opacity = 0.2
-                            else music.opacity =1.0
-                            //console.log("click music")
+                            if(music.opacity == 1.0){
+                                gameWindow.sound = false
+                                music.opacity = 0.2}
+                            else {
+                                gameWindow.sound = true
+                                 music.opacity =1.0
+                            }
                         }
                     }
-
                 }
                 Rectangle{
                     id: rect2
@@ -111,7 +113,16 @@ SceneBase {
                         anchors.fill: parent
                         onClicked: {
                             rect2.count++;
-                            sound.source =  rect2.count%2==1?sound.sound_off:sound.sound_on
+                            if(rect2.count%2==1){
+                                sound.source = sound.sound_off
+                                gameWindow.music = false
+                            }else{
+                                sound.source = sound.sound_on
+                                gameWindow.music = true
+                            }
+
+//                            sound.source =  rect2.count%2==1?sound.sound_off:sound.sound_on
+//                            gameWindow.music = false
                             //sound.source = ((sound.source == sound.sound_on) ? sound.sound_off : sound.sound_on)
                             //console.log("click sound !!! "+ sound)
                         }

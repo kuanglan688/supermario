@@ -95,7 +95,9 @@ SceneBase {
                 anchors.fill: parent
                 onClicked: {
                     gameWindow.state = "game"
-                    console.log("first level")
+                    gameScene.currentLevel = 0
+
+//                    console.log("first level")
                 }
             }
         }
@@ -114,7 +116,10 @@ SceneBase {
             MouseArea{
                 anchors.fill: parent
                 onClicked: {
-                    console.log("2 level")
+                    gameScene.currentLevel = 1
+                    gameWindow.state = "game"
+
+//                    console.log("2 level")
                 }
             }
         }
@@ -134,7 +139,10 @@ SceneBase {
             MouseArea{
                 anchors.fill: parent
                 onClicked: {
-                    console.log("3 level")
+                    gameScene.currentLevel = 2
+                    gameWindow.state = "game"
+
+//                    console.log("3 level")
                 }
             }
         }
@@ -153,7 +161,9 @@ SceneBase {
             MouseArea{
                 anchors.fill: parent
                 onClicked: {
-                    console.log("4 level")
+                    gameScene.currentLevel = 3
+                    gameWindow.state = "game"
+//                    console.log("4 level")
                 }
             }
         }

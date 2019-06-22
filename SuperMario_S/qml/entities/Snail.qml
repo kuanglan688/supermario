@@ -106,7 +106,7 @@ Enemy{
     }
 
     function die() {
-        mediaSound.gameSound("enemy_killed")
+//        mediaSound.gameSound("enemy_killed")
         alive = false
         snailTimer.stop()
         snailTimer2.stop()

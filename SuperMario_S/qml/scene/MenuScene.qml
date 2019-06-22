@@ -1,7 +1,6 @@
 import Felgo 3.0
 import QtQuick 2.0
 import "../entities"
-// EMPTY SCENE
 
 SceneBase {
     id: menuScene
@@ -75,7 +74,7 @@ SceneBase {
     Item {
         id: running
 
-        PhysicsWorld{id: physicalworld;gravity: Qt.point(0,10);debugDrawVisible: false}
+        PhysicsWorld{id: physicalworld;gravity: Qt.point(0,0);debugDrawVisible: false}
         EntityManager{id: entityManager}
 
         Ground{
@@ -88,7 +87,7 @@ SceneBase {
             onXAxisChanged: player.changeDirection()
         }
         property alias controller: controller
-        Player{id:player;x:-50;y:100;z:-1;maxspeed: 100;isbig: false}
+        Player{id:player;x:50;y:100;z:-1;maxspeed: 100;isbig: false}
         Scorpion{id: scorpion; x: -100; y:100; gameState: false}
 
         Timer{

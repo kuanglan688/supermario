@@ -7,21 +7,22 @@ TiledEntityBase{
     entityType: "trampoline"
 
 
-    width: trampolineImage.width*trampoline.scale
-    height: trampolineImage.height*trampoline.scale
+    width: trampolineImage.width*trampoline.scale-15
+    height: trampolineImage.height*trampoline.scale-15
 
     property alias trampolineImage : trampolineImage
 
-    property alias trampoline1 : trampoline1
-    property alias trampoline2 : trampoline2
-    property alias trampoline3 : trampoline3
+//    property alias trampoline1 : trampoline1
+//    property alias trampoline2 : trampoline2
+//    property alias trampoline3 : trampoline3
 
     SpriteSequence{
         id:trampolineImage
         scale: 0.6
         running: true
         width: 64; height: 68
-        anchors.horizontalCenter: parent.horizontalCenter
+//        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.centerIn: parent
         interpolate: true
 
 
@@ -60,12 +61,15 @@ TiledEntityBase{
     BoxCollider{
         id:collider
         width: parent.width*0.6
-        height: parent.height*0.6
+        height: 10
+//        height: parent.height*0.6
         anchors.horizontalCenter: trampoline.horizontalCenter
-        anchors.verticalCenter: trampoline.verticalCenter
+//        anchors.verticalCenter: trampoline.verticalCenter
+        anchors.top: parent.top
 
         active: true
-        bodyType: Body.Dynamic
+        friction: 1
+        bodyType: Body.Static
         collisionTestingOnlyMode: false
 
         categories: Box.Category15

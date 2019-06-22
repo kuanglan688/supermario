@@ -17,13 +17,69 @@ SceneBase{
     property alias player: player
     property alias bullet: bullet
 
+    property int currentLevel: 1
+
+
+    MultiResolutionImage{
+        id:bgimage1
+        source: selectLevel()
+        width: parent.width
+        height: parent.height
+        anchors.verticalCenter: parent.verticalCenter
+//        y:height
+        x:container.x %960
+//        x:0
+        visible: true
+        // width>x >-width
+    }
+    MultiResolutionImage{
+        id:bgimage2
+        source: selectLevel()
+        width: parent.width
+        height: parent.height
+//        y:height
+        anchors.verticalCenter: parent.verticalCenter
+        x:bgimage1.x+width
+//        visible: false
+        // width>x >-width
+        Component.onCompleted: {
+            selectLevel()
+        }
+    }
+    Timer{
+        running: true
+        repeat: true
+        interval: 50
+        onTriggered: {
+            bgimage1.x = container.x %960
+            bgimage2.x = bgimage1.x+bgimage1.width
+        }
+    }
 
     //背景图片
     BackgroundImage{
         id:bgImage
+        visible: false
+//        opacity: 0.1
         anchors.fill: parent
-        source: picture1
-        property string picture1:"../../assets/img/game/PTModelSprite_ID35342.png"
+        source: selectLevel()
+//        property string bg0:"../../assets/img/game/PTModelSprite_ID35342.png"
+//        property string bg1:"../../assets/img/game/PTModelSprite_ID35380.png"
+//        property string bg2:"../../assets/img/game/PTModelSprite_ID35353.png"
+//        property string bg3:"../../assets/img/game/PTModelSprite_ID35359.png"
+    }
+
+    property string bg0:"../../assets/img/game/PTModelSprite_ID35342.png"
+    property string bg1:"../../assets/img/game/PTModelSprite_ID35380.png"
+    property string bg2:"../../assets/img/game/PTModelSprite_ID35353.png"
+    property string bg3:"../../assets/img/game/PTModelSprite_ID35359.png"
+    function selectLevel(){
+        switch(currentLevel){
+        case 0: return bg0;
+        case 1: return bg1;
+        case 2: return bg2;
+        case 3: return bg3;
+        }
     }
 
     property alias container: container
@@ -31,10 +87,13 @@ SceneBase{
     Item {
         id: container
         x:  (player.x>480?480-player.x:0)
-        //关卡
-//        Level1{
-//            id:level1
-//        }
+
+
+//        property alias level: level1
+        //        关卡
+//                Level1{
+//                    id:level1
+//                }
         TestLevel{
             id: testlevel
         }
@@ -42,7 +101,7 @@ SceneBase{
         //物理世界
         PhysicsWorld{
             id: physicalWorld
-            debugDrawVisible:true// debugDrawVisible: false//这个是是否显示那个物理线，true显示，false不显示
+            debugDrawVisible:false// debugDrawVisible: false//这个是是否显示那个物理线，true显示，false不显示
             gravity: Qt.point(0,9)
             z:3
         }
@@ -108,12 +167,10 @@ SceneBase{
         interval: 4000
         onTriggered: {
             bulletAlive  = false
-//            bullet.bulletTime2.stop()
+            //            bullet.bulletTime2.stop()
             console.log("Wow! bullet dead")
         }
     }
-
-
 
     //在游戏中显示分数
     SceneShow{
@@ -168,12 +225,7 @@ SceneBase{
         anchors.top: gameScene.gameWindowAnchorItem.top
         image.source: "../../assets/img/game/home.png"
         mouseArea.onClicked: gameWindow.state = "menu"
-//        mouseArea.onClicked: suspend.visible=true
-    }
-
-    //音乐控制
-    MediaSound{
-        id:mediaSound
+        //        mouseArea.onClicked: suspend.visible=true
     }
 
     //手机控制左右

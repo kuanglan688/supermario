@@ -54,11 +54,11 @@ Item {
 
     onPressed: {
         opacity = 0.5
-        console.log("onPress")
+//        console.log("onPress")
     }
 
     onReleased: {
         opacity = 1.0
-        console.log("onRelease")
+//        console.log("onRelease")
     }
 }

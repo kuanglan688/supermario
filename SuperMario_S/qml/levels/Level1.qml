@@ -4,7 +4,7 @@ import "../entities"
 
 Item {
     id: level1
-
+//    property int currentLevel: 1
     Ground{
          //        x:0
          //        y:0

@@ -39,7 +39,9 @@ RESOURCES += \ #    resources.qrc # uncomment for publishing
 
 
 # The .cpp file which was generated for your project. Feel free to hack it.
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    rank.cpp \
+    record.cpp
 
 
 android {
@@ -78,3 +80,7 @@ DISTFILES += \
     qml/entities/Magic.qml \
     qml/entities/Bullet.qml \
     qml/levels/TestLevel.qml
+
+HEADERS += \
+    rank.h \
+    record.h
