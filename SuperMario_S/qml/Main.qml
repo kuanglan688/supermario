@@ -15,7 +15,7 @@ GameWindow {
     onStateChanged: {
         if(music)
             mediasound.handleMusic()
-        console.log("Here Main && Current State:"+state)
+//        console.log("Here Main && Current State:"+state)
     }
 
 //    Component.onCompleted: {console.log("hhihihi")}
@@ -130,6 +130,4 @@ GameWindow {
             mediasound.gameBgMusic.stop()
         }
     }
-
-
 }

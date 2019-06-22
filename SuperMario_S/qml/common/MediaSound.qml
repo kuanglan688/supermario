@@ -123,22 +123,22 @@ Item {
         case "option":
         case "ranking":
             mediaManager.startMusic(menuBgMusic)
-            console.log("Here Handle Music && State " + gameWindow.state)
+//            console.log("Here Handle Music && State " + gameWindow.state)
             break;
         case "level":
             mediaManager.startMusic(levelBgMusic)
-            console.log("Here Handle Music && State " + gameWindow.state)
+//            console.log("Here Handle Music && State " + gameWindow.state)
             break;
         case "game":
             mediaManager.startMusic(gameBgMusic)
-            console.log("Here Handle Music && State " + gameWindow.state)
+//            console.log("Here Handle Music && State " + gameWindow.state)
             break;
         }
     }
 
     function startMusic(music){
             if(music.playing){
-                console.log("正在播放 && return && State "+gameWindow.state)
+//                console.log("正在播放 && return && State "+gameWindow.state)
                 return
             }
             menuBgMusic.stop();
@@ -147,10 +147,10 @@ Item {
 
 
             music.play()
-            console.log("Wow !!! We finally changed the music " + music)
-            console.log("menuBgMusic.playing "+menuBgMusic.playing
-                        +" levelBgMusic.playing "+levelBgMusic.playing
-                        +" gameBgMusic.playing "+gameBgMusic.playing)
+//            console.log("Wow !!! We finally changed the music " + music)
+//            console.log("menuBgMusic.playing "+menuBgMusic.playing
+//                        +" levelBgMusic.playing "+levelBgMusic.playing
+//                        +" gameBgMusic.playing "+gameBgMusic.playing)
         }
 
 }

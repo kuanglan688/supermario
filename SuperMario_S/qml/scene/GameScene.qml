@@ -14,21 +14,18 @@ SceneBase{
     sceneAlignmentX: "left"
     sceneAlignmentY: "top"
 
-    property alias player: player
-    property alias bullet: bullet
-
     property int currentLevel: 1
 
-
+    //背景图片两张
     MultiResolutionImage{
         id:bgimage1
         source: selectLevel()
         width: parent.width
         height: parent.height
         anchors.verticalCenter: parent.verticalCenter
-//        y:height
-        x:container.x %960
-//        x:0
+        //        y:height
+        x:-480
+        //        x:0
         visible: true
         // width>x >-width
     }
@@ -37,37 +34,24 @@ SceneBase{
         source: selectLevel()
         width: parent.width
         height: parent.height
-//        y:height
+        //        y:height
         anchors.verticalCenter: parent.verticalCenter
         x:bgimage1.x+width
-//        visible: false
+        //        visible: false
         // width>x >-width
         Component.onCompleted: {
             selectLevel()
         }
     }
-    Timer{
-        running: true
-        repeat: true
-        interval: 50
-        onTriggered: {
-            bgimage1.x = container.x %960
-            bgimage2.x = bgimage1.x+bgimage1.width
-        }
-    }
-
-    //背景图片
-    BackgroundImage{
-        id:bgImage
-        visible: false
-//        opacity: 0.1
-        anchors.fill: parent
-        source: selectLevel()
-//        property string bg0:"../../assets/img/game/PTModelSprite_ID35342.png"
-//        property string bg1:"../../assets/img/game/PTModelSprite_ID35380.png"
-//        property string bg2:"../../assets/img/game/PTModelSprite_ID35353.png"
-//        property string bg3:"../../assets/img/game/PTModelSprite_ID35359.png"
-    }
+    //    Timer{
+    //        running: true
+    //        repeat: true
+    //        interval: 50
+    //        onTriggered: {
+    //            bgimage1.x = container.x %960
+    //            bgimage2.x = bgimage1.x+bgimage1.width
+    //        }
+    //    }
 
     property string bg0:"../../assets/img/game/PTModelSprite_ID35342.png"
     property string bg1:"../../assets/img/game/PTModelSprite_ID35380.png"
@@ -87,18 +71,11 @@ SceneBase{
     Item {
         id: container
         x:  (player.x>480?480-player.x:0)
+        y:  player.y<200?200-player.y:0
 
+        property alias loader: loader
 
-//        property alias level: level1
-        //        关卡
-//                Level1{
-//                    id:level1
-//                }
-        TestLevel{
-            id: testlevel
-        }
-
-        //物理世界
+        //        物理世界
         PhysicsWorld{
             id: physicalWorld
             debugDrawVisible:false// debugDrawVisible: false//这个是是否显示那个物理线，true显示，false不显示
@@ -106,22 +83,26 @@ SceneBase{
             z:3
         }
 
-        //玩家
+        //        玩家
         Player{
             id:player
             x:100
-            y:450
+            y:100
             z:1
         }
-        //玩家子弹
+        //        玩家子弹
         Bullet{
             id: bullet
         }
 
-        //    EntityManager{
-        //        entityContainer:  container
-        //    }
+        //关卡变成动态加载 在选择关卡时动态加载
+        Loader{
+            id:loader
+        }
 
+        EntityManager{
+            entityContainer:  container
+        }
 
     }
 

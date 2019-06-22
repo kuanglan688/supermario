@@ -4,7 +4,7 @@ import Felgo 3.0
 Enemy{
     id:bear
     entityType: "opponent"
-    variationType: "bear"
+//    variationType: "bear"
 
     width:  bearImage.width*bearImage.scale
     height: bearImage.height*bearImage.scale

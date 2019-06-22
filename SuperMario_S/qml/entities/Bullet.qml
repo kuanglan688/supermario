@@ -4,7 +4,7 @@ TiledEntityBase {
 
     id:bulletEntityBase
     entityType: "bullet"
-    entityId: "mybullet"
+//    entityId: "mybullet"
 
     property alias image: image
     property alias collider: collider

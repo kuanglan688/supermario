@@ -2,57 +2,57 @@ import Felgo 3.0
 import QtQuick 2.12
 
 import "../entities"
-import RankType 1.0
-import RecordType 1.0
+//import RankType 1.0
+//import RecordType 1.0
 
 SceneBase {
     id: rankScene
 
     //背景
-    Rank{
-        id:rank
-    }
+//    Rank{
+//        id:rank
+//    }
 
-    property var leve1Level
-    property var leve1Record
-    property var leve1Holder
-    property var leve2Level
-    property var leve2Record
-    property var leve2Holder
-    property var leve3Level
-    property var leve3Record
-    property var leve3Holder
-    Component.onCompleted: {
-        rank.loadGame()
+//    property var leve1Level
+//    property var leve1Record
+//    property var leve1Holder
+//    property var leve2Level
+//    property var leve2Record
+//    property var leve2Holder
+//    property var leve3Level
+//    property var leve3Record
+//    property var leve3Holder
+//    Component.onCompleted: {
+//        rank.loadGame()
 
-        leve1Level=rank.mlevel1.level
-        leve1Record=rank.mlevel1.record
-        leve1Holder=rank.mlevel1.holder
+//        leve1Level=rank.mlevel1.level
+//        leve1Record=rank.mlevel1.record
+//        leve1Holder=rank.mlevel1.holder
 
-        leve2Level=rank.mlevel2.level
-        leve2Record=rank.mlevel2.record
-        leve2Holder=rank.mlevel2.holder
+//        leve2Level=rank.mlevel2.level
+//        leve2Record=rank.mlevel2.record
+//        leve2Holder=rank.mlevel2.holder
 
-        leve3Level=rank.mlevel3.level
-        leve3Record=rank.mlevel3.record
-        leve3Holder=rank.mlevel3.holder
-        model.append({
-                         "level":leve1Level,
-                         "cost":leve1Record,
-                         "by":leve1Holder
-                     })
-        model.append({
-                         "level":leve2Level,
-                         "cost":leve2Record,
-                         "by":leve2Holder
-                     })
-        model.append({
-                         "level":leve3Level,
-                         "cost":leve3Record,
-                         "by":leve3Holder
-                     })
+//        leve3Level=rank.mlevel3.level
+//        leve3Record=rank.mlevel3.record
+//        leve3Holder=rank.mlevel3.holder
+//        model.append({
+//                         "level":leve1Level,
+//                         "cost":leve1Record,
+//                         "by":leve1Holder
+//                     })
+//        model.append({
+//                         "level":leve2Level,
+//                         "cost":leve2Record,
+//                         "by":leve2Holder
+//                     })
+//        model.append({
+//                         "level":leve3Level,
+//                         "cost":leve3Record,
+//                         "by":leve3Holder
+//                     })
 
-    }
+//    }
 
     BackgroundImage{
         id:bgimage
@@ -81,11 +81,12 @@ SceneBase {
         font.pixelSize: 50
     }
 
-//    //齿轮
-//    Wheel{
-//        x:parent.width - width/2*3
-//        y:0
-//    }
+    //齿轮
+    Wheel{
+        id: wheel
+        x:parent.width - width/2*3
+        y:0
+    }
 
     //listview视图
     ListView {

@@ -1,7 +1,7 @@
 import Felgo 3.0
 import QtQuick 2.0
 import QtQuick.Particles 2.12
-import QtQuick.Shapes 1.12
+//import QtQuick.Shapes 1.12
 import QtGraphicalEffects 1.0
 import QtQuick 2.12
 // EMPTY SCENE

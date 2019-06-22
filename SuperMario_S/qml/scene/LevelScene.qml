@@ -1,6 +1,7 @@
 import Felgo 3.0
 import QtQuick 2.12
 
+import "../levels"
 // EMPTY SCENE
 
 SceneBase {
@@ -34,15 +35,15 @@ SceneBase {
     }
 
     //标题
-    Text {
-        id: title
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top:parent.top
-        anchors.topMargin: 20
-        text: qsTr("select level")
-        font.pointSize: 45
-        font.family: "URW Chancery L"
-    }
+//    Text {
+//        id: title
+//        anchors.horizontalCenter: parent.horizontalCenter
+//        anchors.top:parent.top
+//        anchors.topMargin: 20
+//        text: qsTr("select level")
+//        font.pointSize: 45
+//        font.family: "URW Chancery L"
+//    }
 
     //主菜单
     MultiResolutionImage{
@@ -71,7 +72,11 @@ SceneBase {
         columns: 2
         //        anchors.centerIn: parent
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: title.bottom
+//        anchors.verticalCenter: parent.verticalCenter
+
+        anchors.top: parent.top
+        anchors.topMargin: parent.height/9
+//        anchors.centerIn: parent
         width: parent.width
         height: parent.height
         columnSpacing: parent.width/9
@@ -96,8 +101,7 @@ SceneBase {
                 onClicked: {
                     gameWindow.state = "game"
                     gameScene.currentLevel = 0
-
-//                    console.log("first level")
+                    gameScene.container.loader.source = "../levels/Level1.qml"
                 }
             }
         }
@@ -118,7 +122,7 @@ SceneBase {
                 onClicked: {
                     gameScene.currentLevel = 1
                     gameWindow.state = "game"
-
+                    gameScene.container.loader.source = "../levels/Level2.qml"
 //                    console.log("2 level")
                 }
             }
@@ -141,7 +145,7 @@ SceneBase {
                 onClicked: {
                     gameScene.currentLevel = 2
                     gameWindow.state = "game"
-
+                    gameScene.container.loader.source = "../levels/Level3.qml"
 //                    console.log("3 level")
                 }
             }
@@ -163,6 +167,7 @@ SceneBase {
                 onClicked: {
                     gameScene.currentLevel = 3
                     gameWindow.state = "game"
+                    gameScene.container.loader.source = "../levels/Level4.qml"
 //                    console.log("4 level")
                 }
             }

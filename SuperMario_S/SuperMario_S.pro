@@ -79,7 +79,10 @@ DISTFILES += \
     qml/entities/Wall.qml \
     qml/entities/Magic.qml \
     qml/entities/Bullet.qml \
-    qml/levels/TestLevel.qml
+    qml/levels/TestLevel.qml \
+    qml/levels/Level2.qml \
+    qml/levels/Level3.qml \
+    qml/levels/Level4.qml
 
 HEADERS += \
     rank.h \

@@ -19,6 +19,9 @@ Item {
         anchors.fill: parent
     }
 
+    width: text.width
+    height: text.height
+
     Text {
         id: buttonText
         width: 302
