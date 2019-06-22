@@ -71,53 +71,59 @@ SceneBase {
     }
 
     //动画元素
-    Item {
-        id: running
+//    Item {
+//        id: running
 
-        PhysicsWorld{id: physicalworld;gravity: Qt.point(0,0);debugDrawVisible: false}
-        EntityManager{id: entityManager}
+//        PhysicsWorld{id: physicalworld;gravity: Qt.point(0,0);debugDrawVisible: false}
+//        EntityManager{id: entityManager;entityContainer: run }
 
-        Ground{
-            id: ground
-            x:-1000;y:610;z:-1;widthSize: 100;heightSize: 1;width: 3200; height: 32
-        }
-        TwoAxisController{
-            id: controller
-            xAxis: 1
-            onXAxisChanged: player.changeDirection()
-        }
-        property alias controller: controller
-        Player{id:player;x:50;y:100;z:-1;maxspeed: 100;isbig: false}
-        Scorpion{id: scorpion; x: -100; y:100; gameState: false}
+//        Item {
+//            id: run
 
-        Timer{
-            id: timer
-            running: true
-            repeat: true
-            interval: 60
-            onTriggered: {
-                if(player.x>menuScene.width+500){
-                    controller.xAxis = -1
-                    scorpion.mirror = false
-                }
-                else if(player.x<-500){
-                    controller.xAxis = 1
-                    scorpion.mirror = true
 
-                }
-                else {
-                    if( controller.xAxis == -1)
-                        scorpion.x = player.x+100
-                    else
-                        scorpion.x = player.x-100
-                }
-            }
-        }
-        Coin{
-            id: coin
-            scale: 0.25
-            x:menuScene.width - coin.width*2
-            y:coin.height
-        }
-    }
+//        }
+//        Ground{
+//            id: ground
+//            x:-1000;y:610;z:-1;widthSize: 100;heightSize: 1;width: 3200; height: 32
+//        }
+//        TwoAxisController{
+//            id: controller
+//            xAxis: 1
+//            onXAxisChanged: player.changeDirection()
+//        }
+//        property alias controller: controller
+//        Player{id:player;x:50;y:100;z:-1;maxspeed: 100;isbig: false}
+//        Scorpion{id: scorpion; x: -100; y:100; gameState: false}
+
+
+//        Timer{
+//            id: timer
+//            running: true
+//            repeat: true
+//            interval: 60
+//            onTriggered: {
+//                if(player.x>menuScene.width+500){
+//                    controller.xAxis = -1
+//                    scorpion.mirror = false
+//                }
+//                else if(player.x<-500){
+//                    controller.xAxis = 1
+//                    scorpion.mirror = true
+
+//                }
+//                else {
+//                    if( controller.xAxis == -1)
+//                        scorpion.x = player.x+100
+//                    else
+//                        scorpion.x = player.x-100
+//                }
+//            }
+//        }
+//        Coin{
+//            id: coin
+//            scale: 0.25
+//            x:menuScene.width - coin.width*2
+//            y:coin.height
+//        }
+//    }
 }

@@ -10,7 +10,7 @@ void Rank::read(const QJsonObject &json)
 {
     if(json.contains("level1") && json["level1"].isObject()){
         level1->read(json["level1"].toObject());
-        level1->print();
+//        level1->print();
     }
 
     if(json.contains("level2") && json["level2"].isObject())
@@ -39,13 +39,11 @@ void Rank::write(QJsonObject &json)
 
 }
 
-
-
-
-
 bool Rank::loadGame()
 {
-    QFile loadFile("/home/mjr/data_qt/qt_practice/supermary/SuperMario_S/rank.json");
+    QFile loadFile("rank.json");
+//    loadFile.setFileName("rank.json");
+    /*("/home/mjr/data_qt/qt_practice/supermary/SuperMario_S/rank.json");*/
 
     if(!loadFile.open(QIODevice::ReadOnly | QIODevice::Text)){
       qDebug()<<"failed";
@@ -79,7 +77,6 @@ bool Rank::saveGame()
 
     return true;
 }
-
 
 void Rank::setMlevel1(Record* level)
 {

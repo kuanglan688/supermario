@@ -18,6 +18,7 @@ GameWindow {
         console.log("Here Main && Current State:"+state)
     }
 
+//    Component.onCompleted: {console.log("hhihihi")}
 
     //游戏画面
     GameScene{
@@ -43,7 +44,9 @@ GameWindow {
     //实体管理类
     EntityManager{
         id: manager
+//        objectName: "entityManger"
         entityContainer: gameScene.container
+        poolingEnabled: true
     }
     //音乐管理类
 //    property alias mediasound: mediasound

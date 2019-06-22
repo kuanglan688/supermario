@@ -105,6 +105,7 @@ SceneBase{
             gravity: Qt.point(0,9)
             z:3
         }
+
         //玩家
         Player{
             id:player
@@ -117,7 +118,14 @@ SceneBase{
             id: bullet
         }
 
+        //    EntityManager{
+        //        entityContainer:  container
+        //    }
+
+
     }
+
+
 
     //重置子弹位置
     function resetBullet(){
