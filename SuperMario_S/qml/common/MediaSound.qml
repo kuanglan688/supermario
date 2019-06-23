@@ -97,13 +97,15 @@ Item {
         else if(sound==="diamond")
             diamond.play();
         else if(sound==="coin"){
+            coin.stop()
             coin.play();
-            console.log("coin play")
         }
         else if(sound==="mushroom_catch")
             mushroom_catch.play();
-        else if(sound==="jump")
+        else if(sound==="jump"){
+            jump.stop();
             jump.play();
+        }
         else if(sound==="gameover")
             gameover.play();
         else if(sound==="running_time")
@@ -123,34 +125,34 @@ Item {
         case "option":
         case "ranking":
             mediaManager.startMusic(menuBgMusic)
-//            console.log("Here Handle Music && State " + gameWindow.state)
+            //            console.log("Here Handle Music && State " + gameWindow.state)
             break;
         case "level":
             mediaManager.startMusic(levelBgMusic)
-//            console.log("Here Handle Music && State " + gameWindow.state)
+            //            console.log("Here Handle Music && State " + gameWindow.state)
             break;
         case "game":
             mediaManager.startMusic(gameBgMusic)
-//            console.log("Here Handle Music && State " + gameWindow.state)
+            //            console.log("Here Handle Music && State " + gameWindow.state)
             break;
         }
     }
 
     function startMusic(music){
-            if(music.playing){
-//                console.log("正在播放 && return && State "+gameWindow.state)
-                return
-            }
-            menuBgMusic.stop();
-            levelBgMusic.stop();
-            gameBgMusic.stop();
-
-
-            music.play()
-//            console.log("Wow !!! We finally changed the music " + music)
-//            console.log("menuBgMusic.playing "+menuBgMusic.playing
-//                        +" levelBgMusic.playing "+levelBgMusic.playing
-//                        +" gameBgMusic.playing "+gameBgMusic.playing)
+        if(music.playing){
+            //                console.log("正在播放 && return && State "+gameWindow.state)
+            return
         }
+        menuBgMusic.stop();
+        levelBgMusic.stop();
+        gameBgMusic.stop();
+
+
+        music.play()
+        //            console.log("Wow !!! We finally changed the music " + music)
+        //            console.log("menuBgMusic.playing "+menuBgMusic.playing
+        //                        +" levelBgMusic.playing "+levelBgMusic.playing
+        //                        +" gameBgMusic.playing "+gameBgMusic.playing)
+    }
 
 }

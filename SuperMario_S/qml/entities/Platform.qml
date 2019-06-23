@@ -6,18 +6,21 @@ TiledEntityBase{
     id:platform
     entityType: "platform"
 
-    width: 130*widthSize
-    height: 50
 
-    property int widthSize: 1 //横向个数
+    width: platformCheck? 130*widthSize : 202
+    height:platformCheck? 50:64
 
+    property int widthSize: 1 //我修改了那个基类
+
+    property var platformOld: "../../assets/img/game/PTModelSprite_ID2478.png"
+    property var platformNew: "../../assets/img/game/platform_big.png" //202 x 64
     //重复platform
     Row{
         Repeater{
             model: widthSize
             MultiResolutionImage{
                 id:platformImage
-                source: "../../assets/img/game/PTModelSprite_ID2478.png"
+                source: platformCheck ? platformOld : platformNew
             }
         }
     }

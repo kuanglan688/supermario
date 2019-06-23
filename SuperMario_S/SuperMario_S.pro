@@ -63,26 +63,50 @@ macx {
 }
 
 DISTFILES += \
-    qml/SceneBase.qml \
-    qml/entities/TiledEntityBase.qml \
-    qml/entities/Wheel.qml \
+    qml/Main.qml \
+    qml/scene/GameScene.qml \
+    qml/scene/LevelScene.qml \
+    qml/scene/MenuScene.qml \
+    qml/scene/OptionScene.qml \
+    qml/scene/RankScene.qml \
+    qml/scene/SceneBase.qml \
+    qml/scene/OurGameButtons.qml \
+    qml/entities/Bat.qml \
+    qml/entities/Bear.qml \
+    qml/entities/Bullet.qml \
+    qml/entities/Coin.qml \
     qml/entities/Diamond.qml \
-    qml/gameElements/SceneShow.qml \
     qml/entities/Enemy.qml \
+    qml/entities/Golden.qml \
+    qml/entities/Ground.qml \
     qml/entities/Home.qml \
+    qml/entities/Magic.qml \
+    qml/entities/Mushroom.qml \
+    qml/entities/Platform_litter.qml \
+    qml/entities/Platform.qml \
+    qml/entities/Player.qml \
+    qml/entities/Scorpion.qml \
+    qml/entities/Snail.qml \
+    qml/entities/Spikerock.qml \
+    qml/entities/TiledEntityBase.qml \
+    qml/entities/Trampoline.qml \
+    qml/entities/Wall.qml \
+    qml/entities/Water.qml \
+    qml/entities/WaterNew.qml \
+    qml/entities/Wheel.qml \
+    qml/gameElements/SceneShow.qml \
+    qml/gameElements/PhoneViewRL.qml \
+    qml/gameElements/PhoneView.qml \
     qml/common/Suspend.qml \
     qml/common/FinalSuccess.qml \
     qml/common/Failed.qml \
-    qml/common/menu_sound.png \
     qml/common/MediaSound.qml \
-    qml/entities/Golden.qml \
-    qml/entities/Wall.qml \
-    qml/entities/Magic.qml \
-    qml/entities/Bullet.qml \
+    qml/common/PlatformerImageButton.qml \
     qml/levels/TestLevel.qml \
+    qml/levels/Level1.qml \
     qml/levels/Level2.qml \
     qml/levels/Level3.qml \
-    qml/levels/Level4.qml
+    qml/levels/Level4.qml \
 
 HEADERS += \
     rank.h \

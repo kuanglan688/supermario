@@ -60,7 +60,6 @@ Item{
         l3_26_7.reset()
     }
 
-    Component.onCompleted: reset()
     Ground{
         id:l3_1
         widthSize:5

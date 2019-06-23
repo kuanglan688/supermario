@@ -19,6 +19,11 @@ Item {
         anchors.fill: parent
     }
 
+    FontLoader{
+        id: font
+        source: "../../assets/font/PepitaMT.ttf"
+    }
+
     width: text.width
     height: text.height
 
@@ -28,16 +33,16 @@ Item {
         height: 108
         color: "#fd3939"
         text: "Here Text"
+        font.family: font.name
         anchors.verticalCenterOffset: 0
         anchors.horizontalCenterOffset: 0
         font.capitalization: Font.MixedCase
         font.italic: false
         styleColor: "#b2f622"
         font.bold: true
-        font.pointSize: 45
+        font.pointSize: 30
         style: Text.Sunken
         font.weight: Font.Bold
-        font.family: "Times New Roman"
         lineHeight: 1.7
         textFormat: Text.AutoText
         verticalAlignment: Text.AlignVCenter

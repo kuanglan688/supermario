@@ -6,6 +6,7 @@ EntityBase {
     id: tiledEntityBase
 
 
+    property bool platformCheck: true
     property double column
     property double row
     property int widthSize:1

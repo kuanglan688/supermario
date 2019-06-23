@@ -1,5 +1,6 @@
 #include <QApplication>
 #include <FelgoApplication>
+#include <QQmlEngine>
 #include "rank.h"
 #include "record.h"
 
@@ -8,16 +9,14 @@
 
 int main(int argc, char *argv[])
 {
-
-    QApplication app(argc, argv);
-
     qmlRegisterType<Rank>("RankType",1,0,"Rank");
     qmlRegisterType<Record>("RecordType",1,0,"Record");
-
-    FelgoApplication felgo;
     Rank rank;
     rank.loadGame();
+    QApplication app(argc, argv);
 
+
+    FelgoApplication felgo;
     QQmlApplicationEngine engine;
     felgo.initialize(&engine);
 

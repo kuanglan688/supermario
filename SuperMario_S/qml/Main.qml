@@ -41,12 +41,10 @@ GameWindow {
     //实体管理类
     EntityManager{
         id: manager
-//        objectName: "entityManger"
         entityContainer: gameScene.container
         poolingEnabled: true
     }
     //音乐管理类
-//    property alias mediasound: mediasound
     MediaSound{
         id: mediasound
     }
@@ -110,6 +108,7 @@ GameWindow {
         }
     ]
 
+    //被player调用
     function playerSound(object){
         if(sound)
             mediasound.gameSound(object)

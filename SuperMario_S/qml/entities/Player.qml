@@ -95,17 +95,25 @@ EntityBase {
                 gameWindow.playerSound("mushroom_catch")
                 otherEntiry.collect()
                 playerBigger()
+                sumScore = sumScore + 100
             }else if(otherEntiry.entityType === "coin"){
                 gameWindow.playerSound("coin")
                 otherEntiry.collect()
                 coinNumber ++
+                sumScore = sumScore + 50
             }else if(otherEntiry.entityType === "diamond"){
                 gameWindow.playerSound("diamond")
                 otherEntiry.collect()
                 diamondNumber++
+                sumScore = sumScore +200
             }else if(otherEntiry.entityType === "home"){
                 gameWindow.playerSound("running_time")
                 playerImage.opacity=0
+                finalSuccess.visible=true
+                finalSuccess.image.jumpTo(player.starNumberName())
+                finalSuccess.time_Process();
+                gameScene.levelTimer.stop()
+
             }else if(otherEntiry.entityType === "opponent"){
                 gameWindow.playerSound("gameover")
                 player.die();
@@ -114,6 +122,7 @@ EntityBase {
                 otherEntiry.collect();
                 couldEat = false
                 couldFire = true
+                sumScore = sumScore + 100
             }else if(otherEntiry.entityType === "water"){
                 gameWindow.playerSound("gameover")
                 player.die();
@@ -204,6 +213,8 @@ EntityBase {
                 if(couldjumptwotimes)
                     doublejump = true
             } else if(otherEntiry.entityType === "opponent"){
+                sumScore = sumScore + 100
+                gameWindow.playerSound("enemy_killed")
                 otherEntiry.die()
             }
         }
@@ -272,8 +283,9 @@ EntityBase {
     }
     property int playerWalkingCount: 0 //player walking 时的state
 
-    property int coinNumber: 0 //金币数目
-    property int diamondNumber: 0 //钻石数目
+    property int coinNumber: 0 //金币数目(50分一个)
+    property int diamondNumber: 0 //钻石数目（200分一个）
+//    property int entityNumber: 0//敌人数目(100分一个，包含所有可以吃得东西)
     property int accelerateForce: 200 //施加于player上的力
     property int maxspeed: 150 //最大速度
 
@@ -311,9 +323,11 @@ EntityBase {
     function die(){
         jump()  // 死亡时跳一哈
         collider.linearVelocity.x =0   //水平速度设为0
-        collider.force = Qt.point(0,0) //人物上的力设为0
         deadTimer.start()
         gameWindow.playerSound("gameover")
+        gameScene.failed.isTimeOut = false
+        gameScene.failed.visible = true
+        gameScene.levelTimer.stop()
     }
     //死亡计时器
     Timer{
@@ -328,10 +342,30 @@ EntityBase {
 
     //重置player
     function resetPlayer(){
-        collider.force = Qt.point(controller.xAxis*accelerateForce,0) //恢复力
         alive = true
+        couldFire = false
+        couldjumptwotimes = false
+        playerImage.opacity = 1
         player.x = 100
         player.y = 100
+        sumScore = 0
     }
 
+    property int sumScore: 0
+//    function score()
+//    {
+//        return coinNumber * 50 + entityNumber *100 + diamondNumber*200;
+//    }
+
+    function starNumberName()
+    {
+        switch(diamondNumber){
+        case 2:
+            return "star2"
+        case 3:
+            return "star3"
+        default:
+            return "star1"
+        }
+    }
 }

@@ -14,7 +14,10 @@ SceneBase{
     sceneAlignmentX: "left"
     sceneAlignmentY: "top"
 
-    property int currentLevel: 0
+    property int currentLevel: 0 //当前关卡
+
+    property alias player: player
+    property alias bullet: bullet
 
     //背景图片两张
     MultiResolutionImage{
@@ -23,26 +26,19 @@ SceneBase{
         width: parent.width
         height: parent.height
         anchors.verticalCenter: parent.verticalCenter
-        //        y:height
         x:-480
-        //        x:0
         visible: true
-        // width>x >-width
     }
     MultiResolutionImage{
         id:bgimage2
-        source: selectLevel()
+        source: bgimage1.source
         width: parent.width
         height: parent.height
-        //        y:height
         anchors.verticalCenter: parent.verticalCenter
         x:bgimage1.x+width
-        //        visible: false
-        // width>x >-width
-        Component.onCompleted: {
-            selectLevel()
-        }
     }
+
+    /* 可以让背景动 但是会有卡顿
     //    Timer{
     //        running: true
     //        repeat: true
@@ -52,7 +48,9 @@ SceneBase{
     //            bgimage2.x = bgimage1.x+bgimage1.width
     //        }
     //    }
+    */
 
+    //背景图片
     property string bg0:"../../assets/img/game/PTModelSprite_ID35342.png"
     property string bg1:"../../assets/img/game/PTModelSprite_ID35380.png"
     property string bg2:"../../assets/img/game/PTModelSprite_ID35353.png"
@@ -66,20 +64,19 @@ SceneBase{
         }
     }
 
-
     //容器
     Item {
         id: container
         x:  (player.x>480?480-player.x:0)
-//        y:  player.y<200?200-player.y:0
 
         property alias loader: loader
+        property alias player: player //选择关卡界面用来重置角色
 
         //物理世界
         PhysicsWorld{
             id: physicalWorld
-            debugDrawVisible:true// debugDrawVisible: false//这个是是否显示那个物理线，true显示，false不显示
-            gravity: Qt.point(0,10)
+            debugDrawVisible:false //false不显示物理线
+            gravity: Qt.point(0,10) //重力
             z:3
         }
 
@@ -95,7 +92,7 @@ SceneBase{
             id: bullet
         }
 
-        //关卡变成动态加载 在选择关卡时动态加载
+        //关卡--动态加载 在选择关卡时动态加载
         Loader{
             id:loader
         }
@@ -103,23 +100,21 @@ SceneBase{
         EntityManager{
             entityContainer:  container
         }
-
     }
     property alias container: container
 
 
-
     //重置子弹位置
     function resetBullet(){
-        bullet.visible = true
-        bullet.collider.active = true
-        var frontx = player.x>480?(480-player.width/2):player.x
-        var backx = player.x>480?(480+player.width):player.x+player.width/2
-        //bullet.x=player.mirror?frontx:backx
-        bullet.x=player.x
+        bullet.visible = true   //图片可见
+        bullet.collider.active = true  //碰撞区域激活
+//        var frontx = player.x>480?(480-player.width/2):player.x
+//        var backx = player.x>480?(480+player.width):player.x+player.width/2
+//        bullet.x=player.mirror?frontx:backx
+        bullet.x=player.x //子弹位置
         bullet.y=player.y+player.height*1/2
-        bullet.bulletTime.running=true
-        bullet.bulletTime2.start()
+        bullet.imageTimer.running=true //重新开启计时器
+        bullet.imageTimer2.start()
         bulletTimer.start()
         bulletAlive = true
         bullet.image.visible = true
@@ -127,27 +122,7 @@ SceneBase{
     }
     property bool mirror: false
 
-    //控制器
-    Keys.forwardTo: controller
-    TwoAxisController{
-        id :controller
-        onInputActionPressed: {
-            if(actionName == "up"){ //跳跃
-                player.jump()
-            }else if(actionName == "fire"&&player.couldFire){ //开火
-                if(!bulletAlive&&player.alive){ //子弹不存在且玩家活时
-                    resetBullet()
-                }
-            }
-        }
-        onXAxisChanged: {
-            player.changeDirection()
-        }
-
-    }
-
     property bool bulletAlive: false //控制子弹
-
     property alias bulletTimer: bulletTimer
     //子弹存在计时器
     Timer{
@@ -157,23 +132,48 @@ SceneBase{
         interval: 4000
         onTriggered: {
             bulletAlive  = false
-            //            bullet.bulletTime2.stop()
             console.log("Wow! bullet dead")
         }
     }
 
-    //在游戏中显示分数
+
+    //控制器
+    Keys.forwardTo: controller
+    TwoAxisController{
+        id :controller
+        onInputActionPressed: {
+            if(actionName == "up"){ //跳跃
+                player.jump()
+            }else if(actionName == "fire"){ //开火
+                playerFire()
+            }
+        }
+        onXAxisChanged: { //方向改变
+            player.changeDirection()
+        }
+
+    }
+
+    //玩家开火
+    function playerFire(){
+        if(player.couldFire&&!bulletAlive&&player.alive){
+            gameWindow.playerSound("shot")
+            resetBullet()
+        }
+    }
+
+    //显示分数
     SceneShow{
         id:scoreDisplay
         text: "Score:"
-        result: "0"
+        result: player.sumScore
     }
-    //在游戏中显示时间
+    //显示时间
     SceneShow{
         id:timeDisplay
         anchors.left: scoreDisplay.right
         anchors.leftMargin: 15
-        text: "Time:"
+        text: "LeftTime:"
         result: leftTime
     }
     //在游戏中显示金币
@@ -182,43 +182,70 @@ SceneBase{
         anchors.left: timeDisplay.right
         anchors.leftMargin: 15
         text: "Coins:"
-        result: "100"
+        result: player.coinNumber
 
     }
 
-    property int leftTime: 300 //游戏时间长度
+    property int leftTime: 0 //游戏时间长度
+    property alias levelTimer: levelTimer
     //游戏剩余时间计时器
     Timer{
         id:levelTimer
         interval: 1000
         repeat: true
-        running: true
+        running: false
         onTriggered: {
-            leftTime-=1
+            console.log("")
+            leftTime=leftTime-1
+            if(leftTime==0){
+                player.die()
+                failed.visible=true
+                failed.isTimeOut = true
+                levelTimer.running=false
+            }
         }
-
     }
 
-    //暂停页面
-    Suspend{
-        id:suspend
+//    //暂停页面
+//    Suspend{
+//        id:suspend
+//        visible: false
+//    }
+
+    //闯关成功界面
+    FinalSuccess{
+        id:finalSuccess
+        visible: false
+        score:player.sumScore
+        time: leftTime
+    }
+    //闯关失败界面
+    property alias failed: failed
+    Failed{
+        id:failed
         visible: false
     }
+    function restart(level){//游戏里面重新开局
+        var currentLevel =loader.source
+        loader.source = ""
+        loader.source = currentLevel
+        leftTime = 300
+        levelTimer.restart()
+        player.resetPlayer()
+    }
 
+    //主菜单按钮
     PlatformerImageButton{
         id:menuButton
         width: 80
         height: 60
-
-
         anchors.right:gameScene.gameWindowAnchorItem.right
         anchors.top: gameScene.gameWindowAnchorItem.top
         image.source: "../../assets/img/game/home.png"
         mouseArea.onClicked: {
             loader.source = ""
             gameWindow.state = "menu"
-    }
-        //        mouseArea.onClicked: suspend.visible=true
+        }
     }
 
     //手机控制左右
@@ -226,15 +253,26 @@ SceneBase{
         id:phoneViewRL
         controller: controller
     }
-
     //手机控制跳跃
-    PhoneViewUp{
+    PhoneView{
         id:phoneViewUp
+        anchors.right: gameScene.gameWindowAnchorItem.right
+        anchors.bottom: gameScene.gameWindowAnchorItem.bottom
+        imageSource: "../../assets/img/game/up.png"
         onPressed: {
             player.jump();
         }
-        onReleased: {
+    }
+    //手机控制开火
+    PhoneView{
+        id:phoneViewFire
+        anchors.right: phoneViewUp.left
+        anchors.bottom: phoneViewUp.top
+        imageSource: "../../assets/img/game/up.png"
+        onPressed: {
+            playerFire()
         }
     }
+
 
 }

@@ -47,11 +47,10 @@ TiledEntityBase {
             if(otherEntity.entityType==="opponent"){
                 otherEntity.die()
                 hideBullet()  //子弹击中opponent时自己也死亡
+                gameWindow.playerSound("kill_by_ballet")
             }
-            else if(otherEntity.entityType==="ground")
-                count=0
-            else if  (otherEntity.entityType==="platform")
-                count=10
+            else if(otherEntity.entityType==="ground"||"platform")
+                 count = (count%20<10)? 10 : 0
         }
     }
 
@@ -91,8 +90,8 @@ TiledEntityBase {
         }
     }
 
-    property alias bulletTime: imageTimer
-    property alias bulletTime2: imageTimer2
+    property alias imageTimer: imageTimer
+    property alias imageTimer2: imageTimer2
 
     //隐藏子弹
     function hideBullet(){

@@ -33,6 +33,11 @@ SceneBase {
             radius: height/10
             anchors.centerIn: parent
 
+            FontLoader{
+                id: optionFont
+                source: "../../assets/font/PepitaMT.ttf"
+            }
+
             //标题
             Rectangle{
                 id: title
@@ -48,12 +53,12 @@ SceneBase {
                     anchors.top: parent.top
                     anchors.centerIn: parent
                     text: qsTr("option")
-                    font.family: "URW Chancery L"
+                    font.family: optionFont.name
                     //                color: "green"
                     //                color: "#0ef916"
                     color: "white"
                     styleColor: "#0ef916"
-                    font.pointSize: 45
+                    font.pointSize: 30
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
 
@@ -140,17 +145,20 @@ SceneBase {
                         anchors.centerIn: parent
                         text: qsTr("developer")
                         font.bold: true
+                        font.family: optionFont.name
                         verticalAlignment: Text.AlignVCenter
                         style: Text.Sunken
-                        font.pointSize: 23
+                        font.pointSize: 15
                         horizontalAlignment: Text.AlignHCenter
                     }
                     MouseArea{
                         anchors.fill: parent
                         onClicked: {
                             console.log("Here developer information")
+                            developer.visible = !developer.visible
                         }
                     }
+
                 }
                 Rectangle{
                     width: optionScene.width/10*2;
@@ -171,6 +179,21 @@ SceneBase {
                             gameWindow.state = "menu"
                             //console.log("To Home Page")
                         }
+                    }
+                }
+            }
+            MultiResolutionImage{
+                id: developer
+                width: parent.width*8/10
+                height: parent.height*8/10
+                anchors.centerIn: parent
+                fillMode: Image.PreserveAspectFit
+                visible: false
+                source: "../../assets/img/game/IMG20190623153652.png"
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                        developer.visible = false
                     }
                 }
             }

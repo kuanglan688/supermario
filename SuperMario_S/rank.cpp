@@ -2,8 +2,10 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QJsonObject>
+#include <QStringLiteral>
 #include <QFile>
 #include <QDebug>
+#include <QDir>
 
 
 void Rank::read(const QJsonObject &json)
@@ -41,12 +43,11 @@ void Rank::write(QJsonObject &json)
 
 bool Rank::loadGame()
 {
-    QFile loadFile("rank.json");
-//    loadFile.setFileName("rank.json");
-    /*("/home/mjr/data_qt/qt_practice/supermary/SuperMario_S/rank.json");*/
+    QFile loadFile(QStringLiteral("../SuperMario_S/myrank.json"));
 
     if(!loadFile.open(QIODevice::ReadOnly | QIODevice::Text)){
       qDebug()<<"failed";
+      qDebug()<<QDir::currentPath();
         return false;
     }
 
@@ -63,7 +64,7 @@ bool Rank::loadGame()
 
 bool Rank::saveGame()
 {
-    QFile saveFile("/rank.json");
+    QFile saveFile(QStringLiteral("../SuperMario_S/myrank.json"));
     if(!saveFile.open(QIODevice::WriteOnly)){
         qDebug()<<"failed!";
         return  false;

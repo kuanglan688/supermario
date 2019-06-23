@@ -7,47 +7,38 @@ Item {
     visible: !system.desktopPlatform
     enabled: visible
 
-    height: 60
-    width: 80
-
-    anchors.right: gameScene.gameWindowAnchorItem.right
-    anchors.bottom: gameScene.gameWindowAnchorItem.bottom
+    height: 120
+    width: 120
 
     signal pressed  //定义的信号
-    signal released
 
     Rectangle{
         id:upRectangle
         anchors.fill: parent
-
         radius: 0.4
-
         color: "#ffffff"
         opacity: 0.5
-
         visible: false
-
     }
 
+    property alias imageSource: image.source
     MultiResolutionImage{
         id:image
-        source: "../../assets/img/game/up.png"
         anchors.fill: upRectangle
         fillMode: Image.PreserveAspectFit
-        scale: 0.5
+        scale: 1
     }
 
     MouseArea{
-    anchors.fill: parent
+        anchors.fill: parent
 
-    onPressed: {
-        jumpTouchButton.pressed()//发送信号
-        upRectangle.visible=true
-    }
-    onReleased: {
-        jumpTouchButton.released()
-        upRectangle.visible=false
-    }
+        onPressed: {
+            jumpTouchButton.pressed()//发送信号
+            upRectangle.visible=true
+        }
+        onReleased: {
+            upRectangle.visible=false
+        }
 
 
     }

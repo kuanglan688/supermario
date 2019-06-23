@@ -79,7 +79,7 @@ Enemy {
         active: alive
         bodyType: Body.Dynamic
         categories: Box.Category3
-        collidesWith: Box.Category1|Box.Category2|Box.Category8 // 玩家&&土地
+        collidesWith: Box.Category1|Box.Category2|Box.Category8|Box.Category14 // 玩家&&土地
         friction: 1
     }
 

@@ -35,15 +35,15 @@ SceneBase {
     }
 
     //标题
-//    Text {
-//        id: title
-//        anchors.horizontalCenter: parent.horizontalCenter
-//        anchors.top:parent.top
-//        anchors.topMargin: 20
-//        text: qsTr("select level")
-//        font.pointSize: 45
-//        font.family: "URW Chancery L"
-//    }
+    //    Text {
+    //        id: title
+    //        anchors.horizontalCenter: parent.horizontalCenter
+    //        anchors.top:parent.top
+    //        anchors.topMargin: 20
+    //        text: qsTr("select level")
+    //        font.pointSize: 45
+    //        font.family: "URW Chancery L"
+    //    }
 
     //主菜单
     MultiResolutionImage{
@@ -70,13 +70,9 @@ SceneBase {
 
         id: levelgrid
         columns: 2
-        //        anchors.centerIn: parent
         anchors.horizontalCenter: parent.horizontalCenter
-//        anchors.verticalCenter: parent.verticalCenter
-
         anchors.top: parent.top
         anchors.topMargin: parent.height/9
-//        anchors.centerIn: parent
         width: parent.width
         height: parent.height
         columnSpacing: parent.width/9
@@ -99,9 +95,7 @@ SceneBase {
             MouseArea{
                 anchors.fill: parent
                 onClicked: {
-                    gameWindow.state = "game"
-                    gameScene.currentLevel = 0
-                    gameScene.container.loader.source = "../levels/Level1.qml"
+                    startLevel(0)
                 }
             }
         }
@@ -120,14 +114,10 @@ SceneBase {
             MouseArea{
                 anchors.fill: parent
                 onClicked: {
-                    gameScene.currentLevel = 1
-                    gameWindow.state = "game"
-                    gameScene.container.loader.source = "../levels/Level2.qml"
-//                    console.log("2 level")
+                    startLevel(1)
                 }
             }
         }
-
         Rectangle{
             id: level3;
             width:parent.width/3;
@@ -143,11 +133,7 @@ SceneBase {
             MouseArea{
                 anchors.fill: parent
                 onClicked: {
-                    gameScene.currentLevel = 2
-                    gameWindow.state = "game"
-                    gameScene.container.loader.source = "../levels/Level3.qml"
-                    gameScene.container.loader.source.reset()
-//                    console.log("3 level")
+                    startLevel(2)
                 }
             }
         }
@@ -166,12 +152,35 @@ SceneBase {
             MouseArea{
                 anchors.fill: parent
                 onClicked: {
-                    gameScene.currentLevel = 3
-                    gameWindow.state = "game"
-                    gameScene.container.loader.source = "../levels/Level4.qml"
-//                    console.log("4 level")
+                    startLevel(3)
                 }
             }
         }
+    }
+
+    function startLevel(level){
+        gameScene.container.loader.source =""
+        switch(level){
+        case 0:
+            gameScene.currentLevel = 0;
+            gameScene.container.loader.source = "../levels/Level1.qml"
+            break;
+        case 1:
+            gameScene.currentLevel = 1;
+            gameScene.container.loader.source = "../levels/Level2.qml"
+            break;
+        case 2:
+            gameScene.currentLevel = 2;
+            gameScene.container.loader.source = "../levels/Level3.qml"
+            break;
+        case 3:
+            gameScene.currentLevel = 3;
+            gameScene.container.loader.source = "../levels/Level4.qml"
+            break;
+        }
+        gameWindow.state = "game"
+        gameScene.container.player.resetPlayer()
+        gameScene.levelTimer.restart()
+        gameScene.leftTime = 300 //规定闯关时间
     }
 }

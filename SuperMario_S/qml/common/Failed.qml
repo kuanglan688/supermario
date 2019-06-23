@@ -1,67 +1,99 @@
-import QtQuick 2.0
+import QtQuick 2.12
+import QtQml 2.1
 
 Rectangle{
-    Rectangle {
-        id: rectangle
-        x: 65
-        y: 23
-        width: 518
-        height: 169
-        color: "#ffffff"
+    id:failed
 
-        Text {
-            id: element
-            text: qsTr("LOSER")
-            font.bold: true
-            font.family: "Comic Sans MS"
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            anchors.fill: parent
-            font.pixelSize: 50
-        }
+
+    opacity: 0.5
+    color: "#000000"
+    anchors.centerIn: gameScene
+    width: 400
+    height: 640
+
+    property bool isTimeOut: false//判断是时间溢出还是失败了
+
+    //加载的字体
+    FontLoader{
+        id: failedFont
+        source: "../../assets/font/PepitaMT.ttf"
     }
 
-    Rectangle {
-        id: rectangle1
-        x: 70
-        y: 247
-        rotation: -30
-        width: 275
-        height: 145
-        color: "#ffffff"
+    Column{
 
-        Text {
-            id: element1
-            text: qsTr("Once  Again")
-            font.family: "Comic Sans MS"
-            font.bold: true
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            anchors.fill: parent
-            font.pixelSize: 45
+        id:column
+        width:parent.width*2/3
+        height: parent.height*2/3
+        anchors.centerIn: parent
+        spacing: parent.height/10
+
+        Rectangle {
+            id: rectangle
+            width: parent.width
+            height: parent.height/5
+
+            Text {
+                id: element
+                text: isTimeOut ? qsTr("Time out !") : qsTr("You Losed")
+                anchors.fill: parent
+                font.bold: true
+                font.family: failedFont.name
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                font.pixelSize: 50
+            }
+        }
+
+        Rectangle {
+            id: rectangle1
+
+            width: parent.width
+            height: parent.height/5
+
+
+            Text {
+                id: element1
+                text: qsTr("Once  Again")
+                font.family: failedFont.name
+                font.bold: true
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                anchors.fill: parent
+                font.pixelSize: 45
+            }
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                    gameScene.restart(gameScene.currentLevel)
+                    failed.visible = false
+                }
+            }
+        }
+
+        Rectangle {
+            id: rectangle2
+
+            width:parent.width
+            height: parent.height/5
+
+            Text {
+                id: element2
+                text: qsTr("MENU")
+                anchors.fill: parent
+                font.bold: true
+                font.family: failedFont.name
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                font.pixelSize: 30
+            }
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                    gameWindow.state="level"
+                    failed.visible = false
+                }
+            }
         }
     }
-
-    Rectangle {
-        id: rectangle2
-        x: 473
-        y: 392
-        width: 135
-        height: 59
-        color: "#ffffff"
-
-        Text {
-            id: element2
-            text: qsTr("MENU")
-            anchors.fill: parent
-            font.bold: true
-            font.family: "Comic Sans MS"
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: 30
-        }
-    }
-
-
-
 }
+
