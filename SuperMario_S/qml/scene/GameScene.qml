@@ -76,7 +76,7 @@ SceneBase{
         PhysicsWorld{
             id: physicalWorld
             debugDrawVisible:false //false不显示物理线
-            gravity: Qt.point(0,10) //重力
+            gravity: Qt.point(0,20) //重力
             z:3
         }
 

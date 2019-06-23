@@ -561,7 +561,7 @@ Item {
     }
     Home{
         column: 265
-        row:18.5
+        row:16.5
     }
 
 

@@ -110,6 +110,7 @@ EntityBase {
                 gameWindow.playerSound("running_time")
                 playerImage.opacity=0
                 finalSuccess.visible=true
+
                 finalSuccess.image.jumpTo(player.starNumberName())
                 finalSuccess.time_Process();
                 gameScene.levelTimer.stop()
@@ -130,7 +131,7 @@ EntityBase {
                 gameWindow.playerSound("gameover")
                 player.die();
             }else if(otherEntiry.entityType === "trampoline"){
-                collider.linearVelocity.y = -420
+                collider.linearVelocity.y = -750
             }
         }
     }
@@ -300,15 +301,15 @@ EntityBase {
             enablejump = false;
             gameWindow.playerSound("jump")
         }else if(doublejump){
-            collider.linearVelocity.y = firstjumpspeed
+            collider.linearVelocity.y = secondjumpspeed
             doublejump = false;
             gameWindow.playerSound("jump")
         }
     }
     property bool enablejump: true  //第一次跳跃
     property bool doublejump: false  //第二次跳跃
-    property int firstjumpspeed: -320  //第一次跳起速度
-    property int secondjumpspeed: -250 //第二次跳起速度
+    property int firstjumpspeed: -500  //第一次跳起速度
+    property int secondjumpspeed: -350 //第二次跳起速度
 
     //改变 player 方向
     function changeDirection(){

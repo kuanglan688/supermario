@@ -14,10 +14,10 @@ Item {
          row:5
      }
 
-    Home{
-          column: 20
-          row:7
-      }
+//    Home{
+//          column: 20
+//          row:7
+//      }
     Ground{
         widthSize:17
         heightSize:3

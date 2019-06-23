@@ -233,12 +233,12 @@ Item{
         column:l3_10.column+l3_10.widthSize + 3
         row:10 + 2
     }
-    Platform{
-//        id:l3_16
-        widthSize: 6
-        column:l3_10.column+l3_10.widthSize + 3
-        row:2
-    }
+//    Platform{
+////        id:l3_16
+//        widthSize: 6
+//        column:l3_10.column+l3_10.widthSize + 3
+//        row:2
+//    }
     Wheel{
         id:l3_16_2
         column: l3_10.column+l3_10.widthSize + 4

@@ -66,6 +66,7 @@ Rectangle{
                 onClicked: {
                     gameScene.restart(gameScene.currentLevel)
                     failed.visible = false
+                    gameScene.player.coinNumber = 0
                 }
             }
         }
