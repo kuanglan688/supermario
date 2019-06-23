@@ -11,8 +11,8 @@ EntityBase {
 
     property bool alive: true
 
-    function die() {
-        mediaSound.gameSound("enemy_killed")
-        alive = false
-    }
+//    function die() {
+//        mediaSound.gameSound("enemy_killed")
+//        alive = false
+//    }
 }

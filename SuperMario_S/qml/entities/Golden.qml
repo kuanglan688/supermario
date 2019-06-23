@@ -30,8 +30,6 @@ TiledEntityBase {
             frameWidth: 64
             frameHeight: 64
             frameDuration: 100//每帧存在时间
-
-//            to:{"block":1}
         }
         Sprite{
             id:block
@@ -61,5 +59,10 @@ TiledEntityBase {
     //变身
     function show(){
         start.to={"block":1}
+    }
+
+    //重置
+    function reset(){
+        block.to={"start":1}
     }
 }

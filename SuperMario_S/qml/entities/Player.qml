@@ -11,14 +11,13 @@ EntityBase {
     width: playerImage.width
     height: playerImage.height
 
-
     //图片
     MultiResolutionImage{
         id: playerImage
-        scale: isbig?1:0.6 //缩放
+        opacity: (alive?1:0)
+        scale: isbig?0.7:0.6 //缩放
         Behavior on scale {NumberAnimation{duration: 500}}
-        Behavior on opacity {NumberAnimation{duration: 4000}} /*这里添加了动画*/
-        //        mirror: (controller.xAxis==-1)
+        Behavior on opacity {NumberAnimation{duration: 4000}} //透明度改变时的动画
         transformOrigin: Item.Bottom //从图片底部中心缩放
 
         property string playerstanding: "../../assets/img/game/PTModelSprite_ID34297.png"
@@ -32,35 +31,44 @@ EntityBase {
         property string playerwalking_8: "../../assets/img/game/PTModelSprite_ID34254.png"
         property string playerjumping: "../../assets/img/game/PTModelSprite_ID34277.png"
     }
-    property bool isbig: false
-    property alias mirror: playerImage.mirror
 
+    property bool isbig: false //记录大小
+    property alias mirror: playerImage.mirror //记录翻转
 
-    //任务碰撞区域
+    //人物碰撞区域
     PolygonCollider{
         id:collider
         vertices:isbig?
-                     //big
-                     [
-                         Qt.point(0, 20),
-                         Qt.point(30, 0),
-                         Qt.point(60, 0),
-                         Qt.point(77, 20),
-                         Qt.point(77, 90),
-                         Qt.point(60, 120),
-                         Qt.point(0, 120),
+                     [//big 0.7
+                      Qt.point(11, 50),
+                      Qt.point(32, 36),
+                      Qt.point(53, 36),
+                      Qt.point(65, 50),
+                      Qt.point(65, 99),
+                      Qt.point(53, 120),
+                      Qt.point(11, 120),
                      ]
-                     //small
                    :
-                     [
-                         Qt.point(33, 48),
-                         Qt.point(52, 48),
-                         Qt.point(62, 60),
-                         Qt.point(62, 102),
-                         Qt.point(52, 120),
-                         Qt.point(15, 120),
-                         Qt.point(15, 60),
+                     [//small
+                      Qt.point(33, 48),
+                      Qt.point(52, 48),
+                      Qt.point(62, 60),
+                      Qt.point(62, 102),
+                      Qt.point(52, 120),
+                      Qt.point(15, 120),
+                      Qt.point(15, 60),
                      ]
+        /* scale 1
+                     [
+                      Qt.point(0, 20),
+                      Qt.point(30, 0),
+                      Qt.point(60, 0),
+                      Qt.point(77, 20),
+                      Qt.point(77, 90),
+                      Qt.point(60, 120),
+                      Qt.point(0, 120),
+                     ]
+        */
 
         force: Qt.point(controller.xAxis*accelerateForce,0)
         active: alive
@@ -69,7 +77,7 @@ EntityBase {
         collidesWith: Box.Category3|Box.Category5|Box.Category7
                       |Box.Category8|Box.Category9|Box.Category10
                       |Box.Category11|Box.Category12| Box.Category13
-                      |Box.Category15|Box.Category16//与Box.Category3对手&&Box.Category8地板
+                      |Box.Category15|Box.Category16
 
         friction: 0  //摩擦力
 
@@ -79,38 +87,33 @@ EntityBase {
             else if(linearVelocity.x <-maxspeed)linearVelocity.x = -maxspeed
         }
 
+        //与物体碰撞
         fixture.onBeginContact:{
             var otherEntiry = other.getBody().target
             console.log("here we contact")
             if(otherEntiry.entityType === "powerup"){
                 gameWindow.playerSound("mushroom_catch")
                 otherEntiry.collect()
-                //变大后的处理
-                player.isbig = true
-                couldjumptwotimes = true
-                doublejump = true
-                //console.log("mushroom is collected")
+                playerBigger()
             }else if(otherEntiry.entityType === "coin"){
                 gameWindow.playerSound("coin")
-                //                gameScene.mediasound.gameSound("coin")
                 otherEntiry.collect()
-                coinnumber ++
+                coinNumber ++
             }else if(otherEntiry.entityType === "diamond"){
                 gameWindow.playerSound("diamond")
                 otherEntiry.collect()
-                diamondnumber ++
+                diamondNumber++
             }else if(otherEntiry.entityType === "home"){
                 gameWindow.playerSound("running_time")
                 playerImage.opacity=0
-                collider.active=false
             }else if(otherEntiry.entityType === "opponent"){
                 gameWindow.playerSound("gameover")
                 player.die();
             }else if(otherEntiry.entityType === "magic"&&couldEat){
                 gameWindow.playerSound("mushroom_catch")
+                otherEntiry.collect();
                 couldEat = false
                 couldFire = true
-                otherEntiry.beEated();
             }else if(otherEntiry.entityType === "water"){
                 gameWindow.playerSound("gameover")
                 player.die();
@@ -121,9 +124,16 @@ EntityBase {
                 collider.linearVelocity.y = -420
             }
         }
-
     }
 
+
+    function playerBigger(){ //人物变大
+        player.isbig = true
+        couldjumptwotimes = true
+        doublejump = true
+    }
+
+    //头部碰撞区域
     PolygonCollider{
         id:topCollider
 
@@ -147,30 +157,27 @@ EntityBase {
 
         fixture.onBeginContact: {
             var otherEntity = other.getBody().target
-
             if(otherEntity.entityType==="magic"){
                 gameWindow.playerSound("mushroom_catch")
-                checkTime.start()
                 otherEntity.visual = true
+                checkTimer.start()
             }
             if(otherEntity.entityType==="golden"){
-                console.log("collider golden")
+                gameWindow.playerSound("hit_block")
                 otherEntity.show()
             }
 
         }
-
         friction: 0
-
     }
 
+    //脚部碰撞区域
     BoxCollider{
         id: boxCollider
         width: 77*playerImage.scale-10
         height: 20*playerImage.scale
 
-        //调试时显示传感器的位置
-        Rectangle{
+        Rectangle{//调试时显示传感器的位置
             width: parent.width
             height: parent.height
             anchors.centerIn: parent
@@ -186,25 +193,25 @@ EntityBase {
         bodyType: Body.Dynamic
         active: collider.active
         categories: Box.Category2
-        collidesWith: Box.Category3|Box.Category5|Box.Category8|Box.Category11//11是金色的wall
+        collidesWith: Box.Category3|Box.Category5|Box.Category8|Box.Category11
 
         fixture.onBeginContact: {
             var otherEntiry = other.getBody().target
-            //            console.log(otherEntiry.entityType+" at boxcllider area")
-            if(otherEntiry.entityType === "ground"||otherEntiry.entityType === "platform"||otherEntiry.entityType === "golden"){
+            if(otherEntiry.entityType === "ground"
+                    ||otherEntiry.entityType === "platform"
+                    ||otherEntiry.entityType === "golden"){
                 enablejump = true
                 if(couldjumptwotimes)
                     doublejump = true
-                //                console.log("Now You Could Jump Two Times")
             } else if(otherEntiry.entityType === "opponent"){
                 otherEntiry.die()
-                //                console.log("opponent die because of here")
             }
         }
     }
 
+    //头部计时器
     Timer{
-        id:checkTime
+        id:checkTimer
         running: false
         repeat: false
         interval: 1000
@@ -215,6 +222,7 @@ EntityBase {
 
     }
 
+    //更新player的信息
     Timer{
         id:playerTimer
         interval: 60
@@ -253,7 +261,7 @@ EntityBase {
                 }
             }
 
-            //玩家没有按左右键的情况
+            //处理无按键情况
             var x =controller.xAxis;
             if(x == 0) {
                 //速度大于10时 每次除以1.5 添加缓冲
@@ -264,26 +272,25 @@ EntityBase {
     }
     property int playerWalkingCount: 0 //player walking 时的state
 
-    property int coinnumber: 0 //金币数目
-    property int diamondnumber: 0 //钻石数目
+    property int coinNumber: 0 //金币数目
+    property int diamondNumber: 0 //钻石数目
     property int accelerateForce: 200 //施加于player上的力
     property int maxspeed: 150 //最大速度
 
-    property bool couldEat: false //判断是否能吃炮弹
+    property bool couldEat: false //是否能吃炮弹
     property bool couldFire: false //是否能发射炮弹
     property bool couldjumptwotimes: true //标记能否跳跃两次
 
     //跳跃
     function jump(){
-
-        //        mediaSound.gameSound("jump");
-        //        console.log(player.state)
         if(player.state !== "jumping"&&enablejump){
             collider.linearVelocity.y = firstjumpspeed
             enablejump = false;
+            gameWindow.playerSound("jump")
         }else if(doublejump){
             collider.linearVelocity.y = firstjumpspeed
             doublejump = false;
+            gameWindow.playerSound("jump")
         }
     }
     property bool enablejump: true  //第一次跳跃
@@ -302,13 +309,11 @@ EntityBase {
     property bool alive: true
     //人物死亡
     function die(){
-        //        mediaSound.gameSound("gameover")
-        jump()
-        playerImage.opacity = 0
-        collider.linearVelocity.x =0
-        collider.force = Qt.point(0,0)
+        jump()  // 死亡时跳一哈
+        collider.linearVelocity.x =0   //水平速度设为0
+        collider.force = Qt.point(0,0) //人物上的力设为0
         deadTimer.start()
-        //        console.log("player die")
+        gameWindow.playerSound("gameover")
     }
     //死亡计时器
     Timer{
@@ -319,6 +324,14 @@ EntityBase {
         onTriggered: {
             alive = false
         }
+    }
+
+    //重置player
+    function resetPlayer(){
+        collider.force = Qt.point(controller.xAxis*accelerateForce,0) //恢复力
+        alive = true
+        player.x = 100
+        player.y = 100
     }
 
 }

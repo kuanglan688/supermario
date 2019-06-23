@@ -24,13 +24,18 @@ TiledEntityBase {
         height: parent.height
         active: !collected
         bodyType: Body.Dynamic
-//        collisionTestingOnlyMode: true
         categories: Box.Category12
         collidesWith: Box.Category1|Box.Category8
     }
 
     property bool collected: false //是否被收集
+
+    //收集
     function collect(){
         collected = true
+    }
+    //重置
+    function reset(){
+        collected = false
     }
 }

@@ -11,8 +11,6 @@ TiledEntityBase {
     property string grass: "../../assets/img/game/PTModelSprite_ID3790.png"
     property string dirt: "../../assets/img/game/PTModelSprite_ID4224.png"
 
-//    gameScene.currentLevel
-
     //设置关卡土地颜色
     function setLevelGround(){
         switch(gameScene.currentLevel) {

@@ -20,7 +20,7 @@ Enemy{
         Behavior on opacity {
             NumberAnimation{ duration: 2000}
         }
-        mirror: collider.linearVelocity.x <0 ?false : true //此属性保留图像是否应水平反转（有效地显示镜像图像）
+        mirror: collider.linearVelocity.x <0 ? false : true //此属性保留图像是否应水平反转（有效地显示镜像图像）
         property string snailwalking_1: "../../assets/img/game/PTModelSprite_ID33374.png"
         property string snailwalking_2: "../../assets/img/game/PTModelSprite_ID33375.png"
         property string snailwalking_3: "../../assets/img/game/PTModelSprite_ID33376.png"
@@ -56,6 +56,7 @@ Enemy{
         }
     }
 
+    //蜗牛传感器
     BoxCollider{
         id:leftColliderSensor
         active: collider.active
@@ -65,7 +66,7 @@ Enemy{
             width: parent.width
             height: parent.height
             anchors.fill: parent
-            //            color: "red"
+            color: "red"
             visible: alive
         }
         anchors.horizontalCenter: parent.horizontalCenter
@@ -78,8 +79,9 @@ Enemy{
 
     }
 
+    //蜗牛图片计时器
     Timer{
-        id:snailTimer
+        id:snailImageTimer
         interval: 400
         repeat: true
         running: true
@@ -94,9 +96,9 @@ Enemy{
         }
     }
 
-
+    //蜗牛转向计时器
     Timer{
-        id:snailTimer2
+        id:snailDirectionTimer
         interval: 8000
         running: true
         repeat: true
@@ -105,11 +107,18 @@ Enemy{
         }
     }
 
+    //死亡
     function die() {
-//        mediaSound.gameSound("enemy_killed")
         alive = false
-        snailTimer.stop()
-        snailTimer2.stop()
+        snailImageTimer.stop()
+        snailDirectionTimer.stop()
+    }
+
+    //重置--复活
+    function reset(){
+        alive = true
+        snailImageTimer.restart()
+        snailDirectionTimer.restart()
     }
 }
 

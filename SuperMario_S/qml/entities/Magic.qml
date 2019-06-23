@@ -34,7 +34,7 @@ TiledEntityBase {
     BoxCollider{
         id:collider
         anchors.fill: parent
-        active:!hasEated
+        active:!collected
         collisionTestingOnlyMode: true//这样就只有碰撞检测没有重力
         bodyType:Body.Dynamic
         categories: Box.Category16
@@ -42,12 +42,19 @@ TiledEntityBase {
     }
 
     property bool visual: false
-    property bool hasEated: false
+    property bool collected: false
 
-    function beEated(){
-        magicImage.visible=false
+    //被吃掉
+    function collect(){
         visual = false
-        hasEated = true
+        collected = true
+    }
+
+    //重置
+    function reset(){
+        visual = true
+        collected = true
+        magic.y = magic.y+magic.height
     }
 }
 

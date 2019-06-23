@@ -91,5 +91,10 @@ Enemy{
         batTimer.stop()
     }
 
+    //重置
+    function reset(){
+        alive = true
+        batTimer.restart()
+    }
 }
 

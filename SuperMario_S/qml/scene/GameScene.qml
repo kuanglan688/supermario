@@ -14,7 +14,7 @@ SceneBase{
     sceneAlignmentX: "left"
     sceneAlignmentY: "top"
 
-    property int currentLevel: 1
+    property int currentLevel: 0
 
     //背景图片两张
     MultiResolutionImage{
@@ -66,31 +66,31 @@ SceneBase{
         }
     }
 
-    property alias container: container
+
     //容器
     Item {
         id: container
         x:  (player.x>480?480-player.x:0)
-        y:  player.y<200?200-player.y:0
+//        y:  player.y<200?200-player.y:0
 
         property alias loader: loader
 
-        //        物理世界
+        //物理世界
         PhysicsWorld{
             id: physicalWorld
-            debugDrawVisible:false// debugDrawVisible: false//这个是是否显示那个物理线，true显示，false不显示
-            gravity: Qt.point(0,9)
+            debugDrawVisible:true// debugDrawVisible: false//这个是是否显示那个物理线，true显示，false不显示
+            gravity: Qt.point(0,10)
             z:3
         }
 
-        //        玩家
+        //玩家
         Player{
             id:player
             x:100
             y:100
             z:1
         }
-        //        玩家子弹
+        //子弹
         Bullet{
             id: bullet
         }
@@ -105,6 +105,7 @@ SceneBase{
         }
 
     }
+    property alias container: container
 
 
 
@@ -213,7 +214,10 @@ SceneBase{
         anchors.right:gameScene.gameWindowAnchorItem.right
         anchors.top: gameScene.gameWindowAnchorItem.top
         image.source: "../../assets/img/game/home.png"
-        mouseArea.onClicked: gameWindow.state = "menu"
+        mouseArea.onClicked: {
+            loader.source = ""
+            gameWindow.state = "menu"
+    }
         //        mouseArea.onClicked: suspend.visible=true
     }
 

@@ -83,7 +83,7 @@ Enemy {
         friction: 1
     }
 
-    //蝎子计时器区域
+    //蝎子传感器区域
     BoxCollider{
         id: sensor
         width: 120*image.scale
@@ -111,7 +111,13 @@ Enemy {
         if(gameState){
             alive = false
             scorpionTimer.stop()
-//            console.log("Scorpion die")
         }
     }
+
+    //重置
+    function reset(){
+        alive = true
+        scorpionTimer.restart()
+    }
+
 }

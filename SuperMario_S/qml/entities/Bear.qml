@@ -80,10 +80,15 @@ Enemy{
     }
 
     //死亡
-    function die()
-    {
+    function die(){
         alive = false
         bearTimer.stop()
+    }
+
+    //重置
+    function reset(){
+        alive = true
+        bearTimer.restart()
     }
 
 }

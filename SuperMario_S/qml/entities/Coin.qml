@@ -51,10 +51,16 @@ TiledEntityBase {
         }
     }
 
-
     //被收集
     property bool collected : false
     function collect(){
         collected = true
+        coinTimer.stop()
+    }
+
+    //重置
+    function reset(){
+        collected = false
+        coinTimer.restart()
     }
 }

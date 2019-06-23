@@ -46,4 +46,9 @@ TiledEntityBase {
     function collect(){
         collected = true
     }
+
+    //重置
+    function reset(){
+        collected = false
+    }
 }

@@ -15,10 +15,7 @@ GameWindow {
     onStateChanged: {
         if(music)
             mediasound.handleMusic()
-//        console.log("Here Main && Current State:"+state)
     }
-
-//    Component.onCompleted: {console.log("hhihihi")}
 
     //游戏画面
     GameScene{

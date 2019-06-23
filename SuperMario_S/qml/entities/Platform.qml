@@ -9,7 +9,7 @@ TiledEntityBase{
     width: 130*widthSize
     height: 50
 
-    property int widthSize: 1
+    property int widthSize: 1 //横向个数
 
     //重复platform
     Row{

@@ -146,6 +146,7 @@ SceneBase {
                     gameScene.currentLevel = 2
                     gameWindow.state = "game"
                     gameScene.container.loader.source = "../levels/Level3.qml"
+                    gameScene.container.loader.source.reset()
 //                    console.log("3 level")
                 }
             }

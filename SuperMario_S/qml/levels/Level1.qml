@@ -4,7 +4,6 @@ import "../entities"
 
 Item {
     id: level1
-//    property int currentLevel: 1
     Ground{
          //        x:0
          //        y:0
@@ -13,7 +12,6 @@ Item {
          column:1//为了算x、y
          row:5
      }
-
     Ground{
         widthSize:17
         heightSize:3
@@ -21,15 +19,6 @@ Item {
         row:3
 
     }
-//    Platform{
-//        widthSize:1
-//        heightSize: 1
-//        row:9
-//        column: 13
-
-
-//    }//
-
     Water{
         widthSize: 4
         heightSize:2
@@ -42,7 +31,7 @@ Item {
          heightSize: 4//总排数
          column:30//为了算x、y
          row:4
-     }//下一次的column就是上一次的column+widthSize
+     }
     Ground{
         widthSize: 4
         heightSize: 5
@@ -202,45 +191,10 @@ Item {
         heightSize: 2
         column: 210
         row:2
-
     }
-//    Mushroom{
-//        column:15
-//        row:10
-//    }
-//    Coin{
-//        column:13
-//        row:13
-//    }
-//    Diamond{
-//        column: 20
-//        row :10
-//    }
-
-//    Scorpion{
-//        column: 15
-//        row:11
-
-//    }
     Snail{
         column: 140
         row:3
-
     }
-//    Mushroom{
-//        column:19
-//        row:10
-//    }
-//    Golden{
-//        column: 7
-//        row:11
-
-//    }
-//    Magic{
-//          column: 7
-//          row:11
-//    }
-
-
 }
 
