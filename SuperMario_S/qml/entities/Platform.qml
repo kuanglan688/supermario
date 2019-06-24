@@ -12,8 +12,8 @@ TiledEntityBase{
 
     property int widthSize: 1 //我修改了那个基类
 
-    property var platformOld: "../../assets/img/game/PTModelSprite_ID2478.png"
-    property var platformNew: "../../assets/img/game/platform_big.png" //202 x 64
+    property string platformOld: "../../assets/img/game/PTModelSprite_ID2478.png"
+    property string  platformNew: "../../assets/img/game/platform_big.png" //202 x 64
     //重复platform
     Row{
         Repeater{

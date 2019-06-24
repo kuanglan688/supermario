@@ -29,6 +29,7 @@ public:
 
     void read(const QJsonObject &json);
     void write(QJsonObject &json) ;
+    void gameInit();
 
 
     Q_INVOKABLE bool loadGame();

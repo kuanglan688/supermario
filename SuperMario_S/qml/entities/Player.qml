@@ -187,12 +187,12 @@ EntityBase {
         width: 77*playerImage.scale-10
         height: 20*playerImage.scale
 
-        Rectangle{//调试时显示传感器的位置
-            width: parent.width
-            height: parent.height
-            anchors.centerIn: parent
-            color: "red"
-        }
+//        Rectangle{//调试时显示传感器的位置
+//            width: parent.width
+//            height: parent.height
+//            anchors.centerIn: parent
+//            color: "red"
+//        }
 
         collisionTestingOnlyMode: true //设置只检测碰撞 不检测位置更新
 

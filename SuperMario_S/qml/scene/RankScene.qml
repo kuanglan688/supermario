@@ -24,7 +24,7 @@ SceneBase {
     property var leve3Holder
 
     Component.onCompleted: {
-        rank.loadGame()
+        //rank.loadGame()
 
         leve1Level=rank.mlevel1.level
         leve1Record=rank.mlevel1.record
@@ -52,7 +52,6 @@ SceneBase {
                          "cost":leve3Record,
                          "by":leve3Holder
                      })
-
     }
 
     BackgroundImage{

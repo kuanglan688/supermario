@@ -11,10 +11,11 @@ int main(int argc, char *argv[])
 {
     qmlRegisterType<Rank>("RankType",1,0,"Rank");
     qmlRegisterType<Record>("RecordType",1,0,"Record");
-    Rank rank;
-    rank.loadGame();
+
     QApplication app(argc, argv);
 
+    Rank rank;
+    //rank.gameInit();
 
     FelgoApplication felgo;
     QQmlApplicationEngine engine;
@@ -24,10 +25,7 @@ int main(int argc, char *argv[])
 
     felgo.setMainQmlFileName(QStringLiteral("qml/Main.qml"));
 
-
     engine.load(QUrl(felgo.mainQmlFileName()));
-
-
 
     return app.exec();
 }

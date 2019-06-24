@@ -41,15 +41,32 @@ void Rank::write(QJsonObject &json)
 
 }
 
+void Rank::gameInit()
+{
+    level1->m_level ="level1";
+    level1->m_record= "1'2''";
+    level1->m_holder="zhouyi";
+    level2->m_level="level2";
+    level2->m_record="2'12''";
+    level2->m_holder="fukang";
+    level3->m_level ="level3";
+    level3->m_record= "1'23''";
+    level3->m_holder="randage";
+
+    saveGame();
+}
+
 bool Rank::loadGame()
 {
-    QFile loadFile(QStringLiteral("../SuperMario_S/myrank.json"));
+    QFile loadFile(QStringLiteral("rank.json"));
 
     if(!loadFile.open(QIODevice::ReadOnly | QIODevice::Text)){
       qDebug()<<"failed";
       qDebug()<<QDir::currentPath();
         return false;
-    }
+    }else {
+          qDebug()<<"succed";
+}
 
 
     QByteArray saveData = loadFile.readAll();
@@ -64,8 +81,8 @@ bool Rank::loadGame()
 
 bool Rank::saveGame()
 {
-    QFile saveFile(QStringLiteral("../SuperMario_S/myrank.json"));
-    if(!saveFile.open(QIODevice::WriteOnly)){
+    QFile saveFile(QStringLiteral("rank.json"));
+    if(!saveFile.open(QIODevice::Append)){
         qDebug()<<"failed!";
         return  false;
     }

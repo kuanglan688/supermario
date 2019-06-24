@@ -89,12 +89,12 @@ Enemy {
         width: 120*image.scale
         height: 10
 
-        Rectangle{
-            width: parent.width
-            height: parent.height
-            color: "red"
-            anchors.centerIn: parent
-        }
+//        Rectangle{
+//            width: parent.width
+//            height: parent.height
+//            color: "red"
+//            anchors.centerIn: parent
+//        }
 
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.bottom

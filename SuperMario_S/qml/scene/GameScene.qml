@@ -136,7 +136,6 @@ SceneBase{
         }
     }
 
-
     //控制器
     Keys.forwardTo: controller
     TwoAxisController{
@@ -245,6 +244,8 @@ SceneBase{
         mouseArea.onClicked: {
             loader.source = ""
             gameWindow.state = "menu"
+            failed.visible = false
+            finalSuccess.visible = false
         }
     }
 
