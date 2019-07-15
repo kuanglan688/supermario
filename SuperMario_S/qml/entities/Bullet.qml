@@ -104,26 +104,4 @@ TiledEntityBase {
     }
 
 }
-/*
-//    SpriteSequence{
-//        id:image
-//        height:74
-//        width: 77
-//        anchors.horizontalCenter: parent.horizontalCenter
-//        interpolate: false
-//        goalSprite: ""
-////        scale: 0.5
 
-//        Sprite{
-//            id:sprite
-//            name: "bullet"
-//            source: "../../assets/img/game/store_icons.png"
-//            frameCount: 1
-//            frameX: 2*77
-//            frameY: 0
-//            frameHeight: 74
-//            frameWidth: 77
-//            frameDuration: 100
-//        }
-//    }
-*/

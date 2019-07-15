@@ -62,13 +62,13 @@ Enemy{
         active: collider.active
         width: 85
         height: 5
-        Rectangle{
-            width: parent.width
-            height: parent.height
-            anchors.fill: parent
-            color: "red"
-            visible: alive
-        }
+//        Rectangle{
+//            width: parent.width
+//            height: parent.height
+//            anchors.fill: parent
+//            color: "red"
+//            visible: alive
+//        }
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.bottom
 

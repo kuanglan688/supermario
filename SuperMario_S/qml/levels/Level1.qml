@@ -4,12 +4,20 @@ import "../entities"
 
 Item {
     id: level1
+//    property int currentLevel: 1
     Ground{
-        widthSize: 8
-        heightSize:5
-        column:1
-        row:5
-    }
+         //        x:0
+         //        y:0
+         widthSize: 8//要得个数
+         heightSize:5//总排数
+         column:1//为了算x、y
+         row:5
+     }
+
+//    Home{
+//          column: 20
+//          row:7
+//      }
     Ground{
         widthSize:17
         heightSize:3
@@ -37,17 +45,20 @@ Item {
     Coin{
         column: 28
         row:9
+
     }
     Ground{
-        widthSize: 15
-        heightSize: 4
-        column:30
-        row:4
-    }
+         widthSize: 15//要得个数
+         heightSize: 4//总排数
+         column:30//为了算x、y
+         row:4
+     }//下一次的column就是上一次的column+widthSize
     Scorpion{
         column: 41
         row:4
+
     }
+
     Magic{
         column: 37
         row:11
@@ -56,21 +67,26 @@ Item {
         column: 37
         row:11
     }
+
+
     Diamond{
         column: 40
         row:15
     }
+
     Ground{
         widthSize: 4
         heightSize: 5
         column: 45
         row:5
+
     }
     WaterNew{
         widthSize: 18
         heightSize: 4
         column: 49
         row:4
+
     }
     Platform{
         widthSize: 1
@@ -95,7 +111,8 @@ Item {
         heightSize: 1
         column:58
         row:11
-    }
+    }//
+
     Platform{
         widthSize: 1
         heightSize: 1
@@ -130,11 +147,11 @@ Item {
     }
 
     Ground{
-        widthSize: 20
-        heightSize: 5
-        column:84
-        row:5
-    }
+         widthSize: 20
+         heightSize: 5
+         column:84
+         row:5
+     }
 
     Snail{
         column: 95
@@ -185,32 +202,32 @@ Item {
 
     }
     Ground{
-        widthSize: 6
-        heightSize: 8
-        column:104
-        row:8
-    }
-    //    Wheel{
-    //        column: 108
-    //        row:11
+         widthSize: 6
+         heightSize: 8
+         column:104
+         row:8
+     }
+//    Wheel{
+//        column: 108
+//        row:11
 
-    //    }
+//    }
     Ground{
-        widthSize: 6
-        heightSize: 11
-        column:110
-        row:11
-    }
-    //    Wheel{
-    //        column: 116
-    //        row:11
-    //    }
+         widthSize: 6
+         heightSize: 11
+         column:110
+         row:11
+     }
+//    Wheel{
+//        column: 116
+//        row:11
+//    }
     Ground{
-        widthSize: 6
-        heightSize: 8
-        column:116
-        row:8
-    }
+         widthSize: 6
+         heightSize: 8
+         column:116
+         row:8
+     }
     Spikerock{
         widthSize: 4
         heightSize: 2
@@ -219,11 +236,11 @@ Item {
 
     }
     Ground{
-        widthSize: 6
-        heightSize: 8
-        column:126
-        row:8
-    }
+         widthSize: 6
+         heightSize: 8
+         column:126
+         row:8
+     }
     Ground{
         widthSize: 15
         heightSize: 5
@@ -719,18 +736,24 @@ Item {
         row:8
     }
     Ground{
+
         widthSize: 25
         heightSize: 11
         column: 355
         row:11
     }
+
     Diamond{
         column: 365
         row:17
+
     }
+
     Home{
         column: 370
         row:14.5
+
     }
+
 }
 

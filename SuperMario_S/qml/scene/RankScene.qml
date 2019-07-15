@@ -2,58 +2,12 @@ import Felgo 3.0
 import QtQuick 2.12
 
 import "../entities"
-import RankType 1.0
-import RecordType 1.0
+import RankUIType 1.0
 
 SceneBase {
     id: rankScene
 
     //背景
-    Rank{
-        id:rank
-    }
-
-    property var leve1Level
-    property var leve1Record
-    property var leve1Holder
-    property var leve2Level
-    property var leve2Record
-    property var leve2Holder
-    property var leve3Level
-    property var leve3Record
-    property var leve3Holder
-
-    Component.onCompleted: {
-        //rank.loadGame()
-
-        leve1Level=rank.mlevel1.level
-        leve1Record=rank.mlevel1.record
-        leve1Holder=rank.mlevel1.holder
-
-        leve2Level=rank.mlevel2.level
-        leve2Record=rank.mlevel2.record
-        leve2Holder=rank.mlevel2.holder
-
-        leve3Level=rank.mlevel3.level
-        leve3Record=rank.mlevel3.record
-        leve3Holder=rank.mlevel3.holder
-        model.append({
-                         "level":leve1Level,
-                         "cost":leve1Record,
-                         "by":leve1Holder
-                     })
-        model.append({
-                         "level":leve2Level,
-                         "cost":leve2Record,
-                         "by":leve2Holder
-                     })
-        model.append({
-                         "level":leve3Level,
-                         "cost":leve3Record,
-                         "by":leve3Holder
-                     })
-    }
-
     BackgroundImage{
         id:bgimage
         anchors.fill: parent
@@ -65,6 +19,11 @@ SceneBase {
         source: "../../assets/font/PepitaMT.ttf"
     }
 
+    property var jsonData: [] //这是一个为了让QML中的值返回c++的js数组
+
+    property alias jsonarray: rankUI.jsonarray
+    property alias jsonData: rankScene.jsonData
+    property alias jsonModel: jsonModel  //只存了前三关的数据，测试关卡的没有存
     //标题
     Text {
         id: ranking
@@ -93,13 +52,31 @@ SceneBase {
         y:0
     }
 
+    RankUI{
+        id:rankUI
+    }
+
+    JsonListModel{
+        id:jsonModel
+
+    }
+    Component.onCompleted: {
+        jsonModel.source = rankUI.jsonarray
+    }
+
+
+    function recordChanged()
+    {
+        for(var i=0;i<jsonModel.count;i++)
+            jsonData[i] = jsonModel.get(i)
+    }
     //listview视图
     ListView {
         id: listView
         width: 730
         height: 399
         delegate: delegate
-        model: model
+        model: jsonModel
         header: header
         clip: true
         spacing:20
@@ -157,7 +134,7 @@ SceneBase {
                     Text {
                         anchors.centerIn: parent
                         id: costtext
-                        text: cost
+                        text: record
                         font.family: rankFont.name
                         font.bold: true
                         verticalAlignment: Text.AlignVCenter
@@ -177,7 +154,7 @@ SceneBase {
                     Text {
                         anchors.centerIn: parent
                         id: bytext
-                        text: by
+                        text: holder
                         font.family: rankFont.name
                         font.bold: true
                         verticalAlignment: Text.AlignVCenter
@@ -273,10 +250,10 @@ SceneBase {
         }
     }
 
-    //listview模型
-    ListModel {
-        id: model
-    }
+//    //listview模型
+//    ListModel {
+//        id: model
+//    }
 
     //主菜单按钮
     OurGameButtons{

@@ -136,6 +136,7 @@ SceneBase{
         }
     }
 
+
     //控制器
     Keys.forwardTo: controller
     TwoAxisController{
@@ -175,6 +176,7 @@ SceneBase{
         text: "LeftTime:"
         result: leftTime
     }
+
     //在游戏中显示金币
     SceneShow{
         id:coinsDisplay
@@ -183,6 +185,16 @@ SceneBase{
         text: "Coins:"
         result: player.coinNumber
 
+    }
+
+    SceneShow{
+        id: life
+        width: 191
+        height: 30
+        anchors.top: scoreDisplay.bottom
+        anchors.margins: 15
+        text: "LifeAmount:"
+        result: player.lifeAmount
     }
 
     property int leftTime: 0 //游戏时间长度
@@ -205,12 +217,36 @@ SceneBase{
         }
     }
 
+
 //    //暂停页面
 //    Suspend{
 //        id:suspend
 //        visible: false
 //    }
 
+    property bool suspendOrStart: true
+    MultiResolutionImage{
+        id:suspendImage
+        source:suspendOrStart ? "../../assets/img/game/button-pause.png" : "../../assets/img/game/button-play.png"
+//       horizontalCenter:gameScene.horizontalCenter
+        anchors.horizontalCenter: gameScene.horizontalCenter
+        anchors.top: gameScene.top
+
+        MouseArea{
+            anchors.fill: suspendImage
+            onClicked: {
+                suspendOrStart = !suspendOrStart
+                if(suspendOrStart==false){
+                    console.log("this is false")
+                    system.pauseGameForObject(gameScene)
+                }
+                else{
+                    console.log("this is true")
+                    system.resumeGameForObject(gameScene)
+                }
+            }
+        }
+    }
     //闯关成功界面
     FinalSuccess{
         id:finalSuccess
@@ -218,6 +254,11 @@ SceneBase{
         score:player.sumScore
         time: leftTime
     }
+    RecordDialog{
+        id:recordDialog
+        visible: false
+    }
+
     //闯关失败界面
     property alias failed: failed
     Failed{
@@ -242,10 +283,9 @@ SceneBase{
         anchors.top: gameScene.gameWindowAnchorItem.top
         image.source: "../../assets/img/game/home.png"
         mouseArea.onClicked: {
+            failed.visible=false
             loader.source = ""
             gameWindow.state = "menu"
-            failed.visible = false
-            finalSuccess.visible = false
         }
     }
 
@@ -274,6 +314,7 @@ SceneBase{
             playerFire()
         }
     }
+
 
 
 }

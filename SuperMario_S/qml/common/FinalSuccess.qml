@@ -35,7 +35,7 @@ Rectangle {
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
             font.bold: true
-            font.pixelSize: 45
+            font.pixelSize: 43
         }
     }
     //分数
@@ -96,7 +96,7 @@ Rectangle {
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
         x: 260
-        text:minute + "'" + second + "''"
+        text:timeString
         font.family: successFont.name
     }
 
@@ -148,10 +148,18 @@ Rectangle {
     }
     property int minute
     property int second
+    property bool secondCheck:false
+    property string timeString
     function time_Process(){
         var allGameTime = 300 - time
         minute = allGameTime / 60
         second = allGameTime % 60
+        if(second <10)
+            timeString = minute + "'" + "0"+second + "''"
+        else
+            timeString = minute + "'" + second + "''"
+//            secondCheck = true
+
     }
 
     //返回按钮

@@ -1,5 +1,7 @@
 # allows to add DEPLOYMENTFOLDERS and links to the Felgo library and QtCreator auto-completion
 CONFIG += felgo
+QT += quick
+CONFIG += c++11
 
 # uncomment this line to add the Live Client Module and use live reloading with your custom C++ code
 # for the remaining steps to build a custom Live Code Reload app see here: https://felgo.com/custom-code-reload-app/
@@ -40,8 +42,7 @@ RESOURCES += \ #    resources.qrc # uncomment for publishing
 
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp \
-    rank.cpp \
-    record.cpp
+    rankui.cpp
 
 
 android {
@@ -107,7 +108,7 @@ DISTFILES += \
     qml/levels/Level2.qml \
     qml/levels/Level3.qml \
     qml/levels/Level4.qml \
+    qml/common/RecordDialog.qml
 
 HEADERS += \
-    rank.h \
-    record.h
+    rankui.h

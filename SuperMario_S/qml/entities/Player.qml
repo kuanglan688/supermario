@@ -11,13 +11,15 @@ EntityBase {
     width: playerImage.width
     height: playerImage.height
 
+    signal record();
     //图片
     MultiResolutionImage{
         id: playerImage
-        opacity: (alive?1:0)
+        //opacity: (alive?1:0)
         scale: isbig?0.7:0.6 //缩放
+        opacity:1.0
         Behavior on scale {NumberAnimation{duration: 500}}
-        Behavior on opacity {NumberAnimation{duration: 4000}} //透明度改变时的动画
+       // Behavior on opacity {NumberAnimation{duration: 2000}} //透明度改变时的动画
         transformOrigin: Item.Bottom //从图片底部中心缩放
 
         property string playerstanding: "../../assets/img/game/PTModelSprite_ID34297.png"
@@ -109,15 +111,27 @@ EntityBase {
             }else if(otherEntiry.entityType === "home"){
                 gameWindow.playerSound("running_time")
                 playerImage.opacity=0
+                alive = false
                 finalSuccess.visible=true
 
                 finalSuccess.image.jumpTo(player.starNumberName())
                 finalSuccess.time_Process();
+                isOrNotShowRecordDialog()
+//                dialogTimer.running = true
                 gameScene.levelTimer.stop()
 
             }else if(otherEntiry.entityType === "opponent"){
-                gameWindow.playerSound("gameover")
-                player.die();
+                if(lifeAmount >= 2){
+                    if(player.isbig == true){
+                        playerSmaller()
+                    }else{
+                        playerLifeAmount();
+                    }
+                }else if(lifeAmount ==1 ){
+                    gameWindow.playerSound("gameover")
+                    lifeAmount --;
+                    player.die();
+                }
             }else if(otherEntiry.entityType === "magic"&&couldEat){
                 gameWindow.playerSound("mushroom_catch")
                 otherEntiry.collect();
@@ -137,10 +151,56 @@ EntityBase {
     }
 
 
+
     function playerBigger(){ //人物变大
         player.isbig = true
         couldjumptwotimes = true
         doublejump = true
+    }
+    //人物变小
+    function playerSmaller(){
+        player.isbig = false;
+        alive = false;
+        doublejump  =false;
+        //reviveEffectTimer.start();
+        reviveTimer.start();
+    }
+
+
+    //复活效果计时器
+    Timer{
+        id:reviveEffectTimer
+        running: false
+        repeat: true
+        interval: 60
+        onTriggered: {
+            if(playerImage.opacity == 1.0){
+                playerImage.opacity = 0.3
+            } else{
+                playerImage.opacity = 1.0
+            }
+        }
+    }
+
+    //复活计时器
+    Timer{
+        id:reviveTimer
+        running: false;
+        interval: 2000
+        repeat: false;
+        onTriggered: {
+            alive = true;
+            reviveEffectTimer.stop();
+            playerImage.opacity = 1.0;
+        }
+    }
+
+    //计算生命值
+    function playerLifeAmount(){
+        lifeAmount--;
+        alive = false;
+        reviveEffectTimer.start();
+        reviveTimer.start();
     }
 
     //头部碰撞区域
@@ -220,6 +280,7 @@ EntityBase {
             }
         }
     }
+    //目的是为了让finalSuccess页面消失，弹出重新登记记录的框
 
     //头部计时器
     Timer{
@@ -286,6 +347,8 @@ EntityBase {
 
     property int coinNumber: 0 //金币数目(50分一个)
     property int diamondNumber: 0 //钻石数目（200分一个）
+    property int lifeAmount : 3    //生命值
+
 //    property int entityNumber: 0//敌人数目(100分一个，包含所有可以吃得东西)
     property int accelerateForce: 200 //施加于player上的力
     property int maxspeed: 150 //最大速度
@@ -329,6 +392,8 @@ EntityBase {
         gameScene.failed.isTimeOut = false
         gameScene.failed.visible = true
         gameScene.levelTimer.stop()
+        playerImage.opacity=0
+//        system.pauseGameForObject(levelScene);//可以暂停游戏中的所有实体
     }
     //死亡计时器
     Timer{
@@ -341,8 +406,10 @@ EntityBase {
         }
     }
 
-    //重置player
+    //
     function resetPlayer(){
+        //        system.resumeGameForObject(gameScene);//恢复
+        lifeAmount = 3
         alive = true
         couldFire = false
         couldjumptwotimes = false
@@ -353,10 +420,6 @@ EntityBase {
     }
 
     property int sumScore: 0
-//    function score()
-//    {
-//        return coinNumber * 50 + entityNumber *100 + diamondNumber*200;
-//    }
 
     function starNumberName()
     {
@@ -368,5 +431,11 @@ EntityBase {
         default:
             return "star1"
         }
+    }
+    function isOrNotShowRecordDialog()
+    {
+        if(finalSuccess.timeString< rankScene.jsonModel.get(gameScene.currentLevel).record)
+            recordDialog.visible=true
+
     }
 }

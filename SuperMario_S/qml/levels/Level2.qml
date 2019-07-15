@@ -18,12 +18,14 @@ Item {
         column:8
         row: 7
     }
+
     Ground{
         widthSize:4      //10
         heightSize:6
         column:6   //开始铺设雪地
         row:6
     }
+
     Coin{
         column:11
         row: 6
